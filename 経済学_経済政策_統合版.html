@@ -1,0 +1,2961 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>経済学・経済政策 学習ノート</title>
+    <!-- Chart.jsを追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.jsアノテーションプラグインを追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.0/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4a86e8;
+            --secondary-color: #6aa84f;
+            --accent-color: #e69138;
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --border-color: #ddd;
+            --hover-color: #eef5ff;
+            --code-bg: #f5f5f5;
+            --story-bg: #f0f0ff;
+            --story-border: #d0d0ff;
+        }
+        
+        body {
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic Pro', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        nav {
+            width: 280px;
+            padding: 20px;
+            position: fixed;
+            top: 80px; /* ヘッダーの高さ分下げる */
+            left: calc((100% - 1200px) / 2);
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        @media (max-width: 1200px) {
+            nav {
+                left: 20px;
+            }
+        }
+        
+        nav h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav li {
+            margin-bottom: 8px;
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 3px;
+            transition: background-color 0.2s ease;
+        }
+        
+        nav a:hover {
+            background-color: var(--hover-color);
+        }
+        
+        /* 目次のメイン項目 */
+        nav > ul > li {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 15px;
+        }
+        
+        nav > ul > li:last-child {
+            border-bottom: none;
+        }
+        
+        nav > ul > li > a {
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 8px 10px;
+            background-color: #f8f9fa;
+            border-left: 3px solid var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        /* 目次のサブ項目 */
+        nav > ul > li > ul {
+            margin-left: 15px;
+            margin-top: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+        
+        nav > ul > li > ul > li {
+            margin-bottom: 2px;
+        }
+        
+        nav > ul > li > ul > li > a {
+            font-size: 0.9em;
+            padding: 4px 8px;
+        }
+
+        /* テキスト図のスタイル */
+        .text-diagram {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            line-height: 1.2;
+            border: 1px solid #ddd;
+        }
+        
+        .placeholder-img {
+            background-color: #f0f0f0;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            margin: 20px auto;
+            max-width: 90%;
+        }
+        
+        .placeholder-img h4 {
+            margin: 0 0 15px 0;
+            color: #444;
+        }
+        
+        .placeholder-img p {
+            margin: 10px 0 0 0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        
+        main {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-left: 300px; /* navの幅+margin分ずらす */
+            margin-top: 0; /* 上部マージンをなくす */
+            min-height: calc(100vh - 180px); /* 最小高さを設定 */
+            overflow: visible; /* 内容がはみ出ても表示 */
+        }
+        
+        section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 25px;
+        }
+        
+        h4 {
+            color: var(--accent-color);
+        }
+        
+        .problem {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .answer {
+            background-color: #f0fff0;
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .explanation {
+            background-color: #fffaf0;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .story {
+            background-color: var(--story-bg);
+            padding: 15px;
+            border-left: 4px solid var(--story-border);
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
+        }
+        
+        .story h4 {
+            color: #5050a0;
+            margin-top: 0;
+        }
+        
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .graph-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .summary-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .summary-box h4 {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+        
+        .summary-box ul {
+            margin-bottom: 0;
+        }
+        
+        /* 図表用の新しいスタイル */
+        .visual-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .diagram-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            min-width: 180px;
+        }
+        
+        .diagram-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+            width: 100%;
+        }
+        
+        .diagram-content {
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .diagram-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--accent-color);
+            font-size: 24px;
+            margin: 0 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .diagram-arrow {
+                transform: rotate(90deg);
+                margin: 15px 0;
+            }
+        }
+        
+        .indicator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .indicator-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .indicator-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        .indicator-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .indicator-table ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .diagram-equality {
+            font-weight: bold;
+            font-size: 24px;
+            margin: 0 15px;
+            color: var(--secondary-color);
+        }
+        
+        /* 矢印のためのスタイル */
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--secondary-color);
+            margin: 5px auto;
+        }
+        
+        .quiz-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .quiz-item:last-child {
+            border-bottom: none;
+        }
+        
+        .highlight {
+            background-color: #ffffcc;
+            padding: 2px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.2s ease;
+        }
+        
+        .back-to-top:hover {
+            background-color: #3a76d8;
+        }
+        
+        .chapter-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            margin: 30px 0 20px 0;
+            border-radius: 5px;
+            font-size: 1.8em;
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            nav {
+                width: auto;
+                position: static;
+                margin-bottom: 20px;
+                margin-right: 0;
+                left: auto;
+                top: auto;
+                max-height: none;
+            }
+            
+            main {
+                margin-left: 0;
+                min-height: auto;
+            }
+        }
+        
+        /* 経済モデルグラフのスタイル */
+        .model-graph {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            margin: 30px auto;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .graph-axis {
+            position: absolute;
+            background-color: #333;
+        }
+        
+        .x-axis {
+            bottom: 70px;
+            left: 70px;
+            width: calc(100% - 100px);
+            height: 2px;
+        }
+        
+        .y-axis {
+            top: 30px;
+            left: 70px;
+            width: 2px;
+            height: calc(100% - 100px);
+        }
+        
+        .axis-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+        
+        .x-arrow {
+            right: -10px;
+            bottom: -4px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 10px solid #333;
+        }
+        
+        .y-arrow {
+            left: -4px;
+            top: -10px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 10px solid #333;
+        }
+        
+        .axis-label {
+            position: absolute;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .x-label {
+            bottom: 45px;
+            right: 10px;
+        }
+        
+        .y-label {
+            top: 10px;
+            left: 60px;
+        }
+        
+        /* 曲線のスタイル（SVGを使用） */
+        .graph-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        
+        .curve-label {
+            position: absolute;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        /* IS曲線ラベル */
+        .is-label {
+            background-color: var(--primary-color);
+            color: white;
+            top: 230px;
+            right: 100px;
+        }
+        
+        /* LM曲線ラベル */
+        .lm-label {
+            background-color: var(--secondary-color);
+            color: white;
+            top: 120px;
+            left: 170px;
+        }
+        
+        .equilibrium {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            top: 175px;
+            left: 200px;
+        }
+        
+        .equilibrium-label {
+            position: absolute;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--accent-color);
+            top: 157px;
+            left: 210px;
+        }
+        
+        /* AD曲線ラベル */
+        .ad-label {
+            background-color: var(--primary-color);
+            color: white;
+            top: 240px;
+            right: 100px;
+        }
+        
+        /* SRAS曲線ラベル */
+        .sras-label {
+            background-color: var(--secondary-color);
+            color: white;
+            top: 130px;
+            left: 180px;
+        }
+        
+        /* LRAS曲線ラベル */
+        .lras-label {
+            background-color: var(--accent-color);
+            color: white;
+            top: 80px;
+            left: 240px;
+        }
+        
+        /* 短期フィリップス曲線ラベル */
+        .srpc-label {
+            background-color: var(--primary-color);
+            color: white;
+            top: 240px;
+            right: 80px;
+        }
+        
+        /* 長期フィリップス曲線ラベル */
+        .lrpc-label {
+            background-color: var(--secondary-color);
+            color: white;
+            top: 100px;
+            left: 240px;
+        }
+        
+        .graph-explanation {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .graph-explanation h4 {
+            margin-top: 0;
+        }
+        
+        .graph-explanation ul {
+            margin-bottom: 0;
+        }
+        
+        /* グラフ用のキャンバス */
+        .graph-canvas {
+            width: 100%;
+            max-width: 460px;
+            height: 280px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .model-graph {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .graph-label {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 3px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+        }
+        
+        .graph-explanation {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .graph-explanation h4 {
+            margin-top: 0;
+        }
+        
+        .graph-explanation ul {
+            margin-bottom: 0;
+        }
+        
+        /* 導入問題の選択肢のスタイル */
+        .problem ol {
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .problem li {
+            margin-bottom: 8px;
+            padding: 6px 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .problem li:hover {
+            background-color: #eef5ff;
+            border-color: var(--primary-color);
+        }
+
+        .problem li.selected {
+            background-color: #e3f0ff;
+            border-color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .answer-explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f0fff0;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .answer-explanation.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 応用問題のスタイル */
+        .applied-problem {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        .applied-answer {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f0fff0;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .applied-answer.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>経済学・経済政策 学習ノート</h1>
+    </header>
+    
+    <div class="container">
+        <nav>
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#chapter1">1. 経済指標の見方や読み方</a>
+                    <ul>
+                        <li><a href="#ch1-1">1.1 経済指標の基本概念</a></li>
+                        <li><a href="#ch1-2">1.2 GDPの三面等価と見方</a></li>
+                        <li><a href="#ch1-3">1.3 雇用統計の見方</a></li>
+                        <li><a href="#ch1-4">1.4 物価指数の種類と特徴</a></li>
+                        <li><a href="#ch1-5">1.5 マネーストック統計</a></li>
+                        <li><a href="#ch1-6">1.6 国際収支と為替レート</a></li>
+                        <li><a href="#ch1-7">1.7 景気動向指数の理解</a></li>
+                        <li><a href="#ch1-quiz">1.8 章末問題</a></li>
+                    </ul>
+                </li>
+                <li><a href="#chapter2">2. マクロ経済理論と経済政策</a>
+                    <ul>
+                        <li><a href="#ch2-1">2.1 マクロ経済モデルの基礎: IS-LM分析</a></li>
+                        <li><a href="#ch2-2">2.2 総需要・総供給モデル</a></li>
+                        <li><a href="#ch2-3">2.3 フィリップス曲線</a></li>
+                        <li><a href="#ch2-4">2.4 景気変動と景気循環</a></li>
+                        <li><a href="#ch2-5">2.5 財政政策の理論と実践</a></li>
+                        <li><a href="#ch2-6">2.6 貨幣理論と金融政策</a></li>
+                        <li><a href="#ch2-7">2.7 マンデル=フレミングモデルと開放経済</a></li>
+                        <li><a href="#ch2-summary">要点まとめ</a></li>
+                        <li><a href="#ch2-quiz">復習クイズ</a></li>
+                    </ul>
+                </li>
+                <li><a href="#chapter3">3. 国際経済と経済政策</a>
+                    <ul>
+                        <li><a href="#ch3-1">3.1 比較生産費説と貿易理論</a></li>
+                        <li><a href="#ch3-2">3.2 貿易政策と保護主義</a></li>
+                        <li><a href="#ch3-3">3.3 国際収支と為替レート</a></li>
+                        <li><a href="#ch3-4">3.4 国際マクロ経済理論</a></li>
+                        <li><a href="#ch3-quiz">3.5 章末問題</a></li>
+                    </ul>
+                </li>
+                <li><a href="#chapter4">4. 主要経済理論</a></li>
+                <li><a href="#chapter5">5. 市場メカニズム</a></li>
+                <li><a href="#chapter6">6. 消費と生産の理論</a></li>
+                <li><a href="#chapter7">7. 組織と戦略の経済学</a></li>
+                <li><a href="#chapter8">8. 所得分配</a></li>
+                <li><a href="#chapter9">9. その他経済学・経済政策</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <h2 id="chapter1" class="chapter-title">1. 経済指標の見方や読み方</h2>
+            
+            <section id="ch1-1">
+                <h2>1.1 経済指標の基本概念</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 名目GDPと実質GDPの違いは何か。また、GDPデフレーターはどのように計算され、どのような意味を持つか。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>名目GDPと実質GDPの違いは、物価変動の影響を考慮しているかどうかです。名目GDPは当該年の市場価格で測定した金額であり、物価上昇の影響を含みます。一方、実質GDPは基準年の価格を用いて計算され、物価変動の影響を除去したものです。</p>
+                    
+                    <p>GDPデフレーターは名目GDP÷実質GDP×100で算出され、経済全体の物価水準を示す指標です。GDPデフレーターが重要な理由は以下の通りです：</p>
+                    <ol>
+                        <li><strong>物価変動の実態把握</strong>：消費者物価指数(CPI)が消費財のみの物価を扱うのに対し、GDPデフレーターは設備投資や政府支出を含む経済全体の物価を反映します。</li>
+                        <li><strong>経済成長の質的評価</strong>：実質成長率と名目成長率の差によって、成長が数量増加によるものか物価上昇によるものかを判断できます。</li>
+                        <li><strong>金融政策の効果測定</strong>：中央銀行がインフレ目標を設定する際の判断材料になります。</li>
+                    </ol>
+                </div>
+                
+                <div class="applied-problem">
+                    <p><strong>応用問題</strong>: 日本の実質GDPが3%増加し、名目GDPが5%増加した場合、GDPデフレーターの変化率はどうなるか。また、これはどのような経済状況を示唆しているか説明せよ。</p>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答例</strong>:</p>
+                    <p>GDPデフレーターの変化率は約1.94%となります。</p>
+                    <p>計算式: (1.05/1.03 - 1) × 100 ≈ 1.94%</p>
+                    <p>これは緩やかなインフレ状態を示しています。実質GDPの3%増加は実体経済の成長を、名目GDPの5%増加はそれに物価上昇分が加わった総合的な経済規模の拡大を示します。約2%のGDPデフレーター上昇は、日本銀行のインフレ目標（2%）に近い物価上昇率であり、デフレ脱却に向けた好ましい経済状況と言えます。</p>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>要点まとめ</h4>
+                    <ul>
+                        <li>名目GDPは現在の市場価格で計測した付加価値の総額</li>
+                        <li>実質GDPは物価変動の影響を除去した実体経済の規模</li>
+                        <li>GDPデフレーター = 名目GDP ÷ 実質GDP × 100</li>
+                        <li>GDPデフレーターは経済全体の物価水準を反映する指標</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="ch1-2">
+                <h2>1.2 GDPの三面等価の図</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: GDPの三面等価とは何か説明し、各面がどのような経済活動を表しているか述べよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p>GDPの三面等価とは、国内総生産（GDP）を3つの異なる側面から測定しても、理論上は同じ値になるという概念です。</p>
+                    <ul>
+                        <li><strong>生産面</strong>: 各産業の付加価値（売上高-中間投入）の合計。農業、工業、サービス業などが生み出した付加価値の総和を表します。</li>
+                        <li><strong>分配面</strong>: 生産活動から生じた所得の分配を表し、雇用者報酬、営業余剰（企業利益）、固定資本減耗、間接税などの合計です。</li>
+                        <li><strong>支出面</strong>: 最終財・サービスへの支出の合計で、消費(C)、投資(I)、政府支出(G)、純輸出(X-M)の総和です。</li>
+                    </ul>
+                    <p>これら3つの面は概念的に一致し、経済循環の異なる側面を捉えています。実際の統計では誤差が生じるため、支出面GDPを基準とすることが多いです。</p>
+                </div>
+                
+                <div class="graph-container">
+                    <div class="visual-diagram">
+                        <div class="diagram-column">
+                            <div class="diagram-header">生産面</div>
+                            <div class="diagram-content">付加価値の合計</div>
+                            <div class="arrow-down"></div>
+                            <div class="diagram-content">
+                                農業・工業・<br>
+                                サービス業等の<br>
+                                付加価値合計
+                            </div>
+                        </div>
+                        
+                        <div class="diagram-equality">=</div>
+                        
+                        <div class="diagram-column">
+                            <div class="diagram-header">分配面</div>
+                            <div class="diagram-content">分配された所得</div>
+                            <div class="arrow-down"></div>
+                            <div class="diagram-content">
+                                雇用者報酬・<br>
+                                営業余剰・<br>
+                                固定資本減耗等
+                            </div>
+                        </div>
+                        
+                        <div class="diagram-equality">=</div>
+                        
+                        <div class="diagram-column">
+                            <div class="diagram-header">支出面</div>
+                            <div class="diagram-content">最終需要の合計</div>
+                            <div class="arrow-down"></div>
+                            <div class="diagram-content">
+                                消費+投資+<br>
+                                政府支出+<br>
+                                純輸出
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="ch1-3">
+                <h2>1.3 雇用統計の見方</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 完全失業率と有効求人倍率の違いは何か。また、それぞれが景気動向においてどのような指標として機能するか説明せよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p><strong>完全失業率と有効求人倍率の違い</strong>:</p>
+                    <ul>
+                        <li><strong>完全失業率</strong>: 労働力人口（就業者+完全失業者）に占める完全失業者の割合を示す指標。完全失業率 = 完全失業者数 ÷ 労働力人口 × 100（%）</li>
+                        <li><strong>有効求人倍率</strong>: 求職者一人当たりの求人数を示す指標。有効求人倍率 = 有効求人数 ÷ 有効求職者数</li>
+                    </ul>
+                    <p><strong>景気動向との関係</strong>:</p>
+                    <ul>
+                        <li><strong>完全失業率</strong>: 景気の「遅行指標」として機能。景気が回復し始めても、企業は採用に慎重になりがちなため、失業率の改善は遅れる傾向がある。</li>
+                        <li><strong>有効求人倍率</strong>: 景気の「先行指標」として機能。景気が上向く兆しがあると企業が求人を増やすため、早い段階で上昇し始める。</li>
+                    </ul>
+                    <p>両指標は労働市場の状況を異なる側面から捉えており、総合的に分析することで、より正確な経済状況の把握が可能になります。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>雇用統計は、労働市場の状況を測定する重要な指標です。主な指標としては、完全失業率、就業率、労働力率などがあります。</p>
+                    
+                    <h4>完全失業率の計算と意味:</h4>
+                    <p>完全失業率 = 完全失業者数 ÷ 労働力人口 × 100（%）</p>
+                    <p>ここで、労働力人口は就業者と完全失業者の合計であり、非労働力人口（就業していない学生、専業主婦、引退者など）は含まれません。</p>
+                    
+                    <p>完全失業率は、景気の遅行指数として知られています。景気が回復し始めてもしばらくは企業が新規採用に慎重であるため、失業率の改善は遅れる傾向があります。</p>
+                    
+                    <h4>有効求人倍率:</h4>
+                    <p>有効求人倍率 = 有効求人数 ÷ 有効求職者数</p>
+                    <p>この値が1を超えると求人数が求職者数を上回り、労働需給がひっ迫している状態を示します。逆に1を下回ると、求職者数が求人数を上回り、労働市場が緩和している状態を示します。有効求人倍率は景気の先行指数の一つとされています。</p>
+                    
+                    <h4>就業構造の変化:</h4>
+                    <p>労働市場の構造的変化として、非正規雇用の増加、女性・高齢者の労働参加率の変化、産業別就業者構成の変化などが重要な分析対象となります。これらの変化は、単に景気循環だけでなく、技術革新、グローバル化、人口構造の変化など、より長期的・構造的な要因によって引き起こされる場合があります。</p>
+                </div>
+            </section>
+            
+            <section id="ch1-4">
+                <h2>1.4 物価指数の種類と特徴</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 消費者物価指数(CPI)とGDPデフレーターの主な違いは何か、また、それぞれの指標がどのような経済分析に適しているか説明せよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p><strong>CPIとGDPデフレーターの主な違い</strong>:</p>
+                    <ul>
+                        <li><strong>対象範囲</strong>: CPIは家計が消費する財・サービスの価格変動のみを対象とするのに対し、GDPデフレーターは国内で生産されるすべての財・サービス（投資財・輸出入含む）を対象とする</li>
+                        <li><strong>算出方法</strong>: CPIは固定バスケット方式（基準年の消費構造が一定）を採用しているのに対し、GDPデフレーターは連鎖方式（各期の生産構造を反映）を採用している</li>
+                        <li><strong>輸入品の扱い</strong>: CPIは輸入品の価格も含むが、GDPデフレーターは国内生産品のみを対象とする</li>
+                    </ul>
+                    <p><strong>適した経済分析</strong>:</p>
+                    <ul>
+                        <li><strong>CPI</strong>: 家計の生活コスト変化や実質賃金の計算、年金や最低賃金の調整など、家計の購買力に関わる分析に適している</li>
+                        <li><strong>GDPデフレーター</strong>: 経済全体のインフレ動向や実質経済成長率の計算など、マクロ経済分析や金融政策の効果測定に適している</li>
+                    </ul>
+                    <p>両指標の変動の差異に注目することで、輸入品価格や投資財価格の変動が経済に与える影響を間接的に把握することができます。</p>
+                </div>
+                
+                <div class="explanation">
+                    <h4>消費者物価指数(CPI):</h4>
+                    <p>家計が購入する財やサービスの価格変動を測定する指標です。一般的にインフレ率を測る基準として用いられます。CPIの特徴としては以下が挙げられます：</p>
+                    <ul>
+                        <li>家計の消費構造（消費バスケット）に基づいてウェイト付けされる</li>
+                        <li>住宅は帰属家賃方式で計算される</li>
+                        <li>品質向上による価格上昇は、純粋な物価上昇とは区別される（品質調整）</li>
+                    </ul>
+                    
+                    <h4>企業物価指数(CGPI):</h4>
+                    <p>企業間で取引される財の価格変動を測定する指標です。CPIに先行して変動する傾向があり、将来のインフレ圧力を予測する指標として利用されます。国内企業物価指数、輸出物価指数、輸入物価指数の3種類があります。</p>
+                    
+                    <h4>GDPデフレーター:</h4>
+                    <p>経済全体の物価水準を表す指標で、国内で生産されるすべての財・サービスの価格変動を反映します。CPIが固定バスケット方式であるのに対し、GDPデフレーターは毎期の生産構造を反映する連鎖方式を採用しています。</p>
+                    
+                    <h4>物価指数選択の留意点:</h4>
+                    <p>分析目的に応じて適切な物価指数を選択する必要があります。例えば、家計の生活コスト変化を見るならCPI、企業のコスト圧力を見るならCGPI、経済全体の物価動向を見るならGDPデフレーターが適しています。また、コア指数（変動の大きい生鮮食品やエネルギーを除いた指数）と総合指数の差異にも注目する必要があります。</p>
+                </div>
+            </section>
+            
+            <section id="ch1-5">
+                <h2>1.5 マネーストック統計</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: マネーストック（M1、M2、M3）の違いを説明し、マネーストックと経済活動（インフレーション）の関係について論じよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p><strong>マネーストックの区分</strong>:</p>
+                    <ul>
+                        <li><strong>M1</strong>: 現金通貨（紙幣・硬貨）+ 預金通貨（普通預金等の要求払預金）。最も流動性の高い通貨</li>
+                        <li><strong>M2</strong>: M1 + 準通貨（定期預金等）+ CD（譲渡性預金）。M1より流動性は低いが、比較的短期間で現金化できる金融資産を含む</li>
+                        <li><strong>M3</strong>: M2 + 郵便貯金 + その他の金融機関の預貯金。より広範な金融資産を含む</li>
+                    </ul>
+                    <p><strong>マネーストックとインフレーションの関係</strong>:</p>
+                    <p>貨幣数量説によれば、マネーストックの増加は、他の条件が一定であれば、物価水準の上昇（インフレーション）をもたらすとされています。式で表すと：</p>
+                    <p>M × V = P × Y （M：通貨量、V：流通速度、P：物価水準、Y：実質産出量）</p>
+                    <p>しかし、実際には以下の理由からこの関係は単純ではありません：</p>
+                    <ul>
+                        <li>貨幣の流通速度（V）が変化する場合がある（特に金融危機後は低下する傾向）</li>
+                        <li>経済に余剰生産能力がある場合、マネーストックの増加は実質産出量（Y）の増加につながる可能性がある</li>
+                        <li>金融システムの発達により、M2やM3に含まれない金融資産も経済活動に影響を与える</li>
+                    </ul>
+                    <p>そのため、中央銀行はマネーストックの動向を注視しつつも、様々な指標を総合的に判断して金融政策を運営しています。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>マネーストック統計は、経済全体に流通している通貨量を測定する統計です。日本銀行が毎月公表しており、金融政策の効果を測定する重要な指標となっています。</p>
+                    
+                    <h4>マネーストックの概念区分:</h4>
+                    <ul>
+                        <li><strong>M1</strong>: 現金通貨（紙幣・硬貨）+ 預金通貨（普通預金等の要求払預金）</li>
+                        <li><strong>M2</strong>: M1 + 準通貨（定期預金等）+ CD（譲渡性預金）</li>
+                        <li><strong>M3</strong>: M2 + 郵便貯金 + その他の金融機関の預貯金</li>
+                        <li><strong>広義流動性</strong>: M3 + その他の金融資産（金融債、投資信託、CP、国債等）</li>
+                    </ul>
+                    
+                    <h4>マネーストックと経済活動の関係:</h4>
+                    <p>マネーストックの増加は、将来的なインフレの原因となる可能性があるため、中央銀行は物価の安定を目指してマネーストックをコントロールしようとします。しかし、貨幣の流通速度が変化する場合、マネーストックと経済活動（名目GDP）の関係は単純ではありません。</p>
+                    
+                    <h4>量的緩和政策とマネタリーベース:</h4>
+                    <p>量的緩和政策では、中央銀行がマネタリーベース（現金通貨 + 準備預金）を増加させますが、これが必ずしもマネーストックの同程度の増加につながるとは限りません。銀行の貸出意欲や企業・家計の資金需要などの要因により、マネーストックの伸びが抑制される場合があります（信用乗数の低下）。</p>
+                </div>
+            </section>
+            
+            <section id="ch1-6">
+                <h2>1.6 国際収支と為替レート</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 国際収支の主要項目（経常収支、資本収支）について説明し、為替レートとの関係を論じよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p><strong>国際収支の主要項目</strong>:</p>
+                    <ul>
+                        <li><strong>経常収支</strong>: 財・サービスの取引や所得・経常移転の受払
+                            <ul>
+                                <li>貿易収支: 財（モノ）の輸出入差額</li>
+                                <li>サービス収支: サービスの輸出入差額（観光、運輸、特許権使用料等）</li>
+                                <li>第一次所得収支: 投資収益、賃金（例：海外からの配当、利子）</li>
+                                <li>第二次所得収支: 無償の経常移転（例：国際援助、出稼ぎ労働者の送金）</li>
+                            </ul>
+                        </li>
+                        <li><strong>資本収支</strong>: 金融資産・負債の取引を記録
+                            <ul>
+                                <li>直接投資: 経営参加を目的とした投資（対内・対外）</li>
+                                <li>証券投資: 株式・債券の売買（対内・対外）</li>
+                                <li>その他投資: 貸付・借入、預金など</li>
+                                <li>外貨準備: 中央銀行の外貨資産の増減</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p><strong>為替レートとの関係</strong>:</p>
+                    <ul>
+                        <li><strong>経常収支と為替レート</strong>: 経常黒字は自国通貨への需要を増加させるため、自国通貨高（円高など）の要因となる。逆に経常赤字は自国通貨安の要因となる。</li>
+                        <li><strong>資本収支と為替レート</strong>: 資本流入（対内投資増加）は自国通貨高の要因となり、資本流出（対外投資増加）は自国通貨安の要因となる。</li>
+                        <li><strong>相互調整メカニズム</strong>: 変動相場制下では、為替レートの変動が国際収支の不均衡を調整する機能を持つ。例えば、経常赤字が続くと自国通貨が減価し、輸出が促進され輸入が抑制されることで、経常収支は改善に向かう。</li>
+                    </ul>
+                    <p>ただし、短期的には資本移動（特に投機的資金）の影響が大きく、経常収支と為替レートの関係が明確に現れないことも多い。長期的には、経済のファンダメンタルズを反映した均衡レートに向かう傾向がある。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>国際収支は、一国と他国との間の経済取引を記録した統計です。主に以下の項目で構成されています：</p>
+                    <ul>
+                        <li><strong>経常収支</strong>: 財・サービスの取引および所得・経常移転の受払
+                            <ul>
+                                <li>貿易収支: 物の輸出入（例：自動車、機械、食料品）</li>
+                                <li>サービス収支: サービスの輸出入（例：観光、運輸、特許使用料）</li>
+                                <li>第一次所得収支: 投資収益、賃金（例：海外からの配当、利子）</li>
+                                <li>第二次所得収支: 無償の経常移転（例：国際援助、出稼ぎ労働者の送金）</li>
+                            </ul>
+                        </li>
+                        <li><strong>資本収支</strong>: 資本移転および非生産・非金融資産の取得・処分
+                            <ul>
+                                <li>直接投資: 経営参加を目的とした投資（対内・対外）</li>
+                                <li>証券投資: 株式・債券の売買（対内・対外）</li>
+                                <li>その他投資: 貸付・借入、預金など</li>
+                                <li>外貨準備: 中央銀行による外貨資産の増減</li>
+                            </ul>
+                        </li>
+                        <li><strong>金融収支</strong>: 金融資産・負債の取引
+                            <ul>
+                                <li>直接投資: 支配権を伴う投資（例：現地法人設立、買収）</li>
+                                <li>証券投資: 株式・債券の売買</li>
+                                <li>その他投資: 借入・貸付、預金など</li>
+                                <li>外貨準備: 中央銀行による外貨資産の増減</li>
+                            </ul>
+                        </li>
+                        <li><strong>誤差脱漏</strong>: 統計上の不一致</li>
+                    </ul>
+                    
+                    <p>国際収支全体は常に均衡するという会計上の原則があります：</p>
+                    <p>経常収支 + 資本収支 + 金融収支 + 誤差脱漏 = 0</p>
+                    
+                    <h4>為替レートの決定理論:</h4>
+                    <p>為替レートは、各国通貨の相対的な価値を示します。その決定に関する主な理論には以下があります：</p>
+                    
+                    <p><strong>購買力平価説</strong>：長期的には、為替レートは各国の物価水準の比率に収束するという考え方です。</p>
+                    <ul>
+                        <li>絶対的購買力平価：同一財のバスケットが各国で同じ価格になるような為替レート（E = P/P*）</li>
+                        <li>相対的購買力平価：インフレ率の差に応じて為替レートが変動（(E₂-E₁)/E₁ = (P₂-P₁)/P₁ - (P*₂-P*₁)/P*₁）</li>
+                        <li>ビッグマック指数などが実例として知られています</li>
+                    </ul>
+                    
+                    <p><strong>金利平価説</strong>：短期的な為替レート決定理論で、各国の金利差が為替レートの変動予想と一致するという考え方です。</p>
+                    <ul>
+                        <li>カバー付き金利平価説：先物為替レートと直物為替レートの差が金利差に等しい（(F-E)/E = i - i*）</li>
+                        <li>カバーなし金利平価説：予想される為替レート変化率が金利差に等しい（(Ee-E)/E = i - i*）</li>
+                    </ul>
+                    
+                    <p><strong>資産市場アプローチ</strong>：為替レートは資産価格であり、将来の予想に基づいて決定されるという考え方です。</p>
+                    <ul>
+                        <li>マネタリーアプローチ：貨幣需給、実質所得、物価水準、金利などの要因で為替レートが決まる</li>
+                        <li>ポートフォリオ・バランス・モデル：国内外の資産の代替性が不完全なことを考慮</li>
+                    </ul>
+                    
+                    <h4>為替相場制度の種類:</h4>
+                    <ul>
+                        <li><strong>固定相場制</strong>：自国通貨の価値を特定の通貨や金などに固定
+                            <ul>
+                                <li>金本位制：通貨価値を金に固定</li>
+                                <li>通貨バスケット制：複数通貨の加重平均に固定</li>
+                                <li>カレンシーボード制：外貨準備と自国通貨発行量を厳格に連動</li>
+                            </ul>
+                        </li>
+                        <li><strong>変動相場制</strong>：市場の需給によって為替レートが決定
+                            <ul>
+                                <li>純粋変動相場制：中央銀行の介入なし</li>
+                                <li>管理変動相場制（ダーティフロート）：必要に応じて中央銀行が介入</li>
+                            </ul>
+                        </li>
+                        <li><strong>中間的制度</strong>
+                            <ul>
+                                <li>クローリングペッグ制：定期的に小幅な調整を行う固定相場制</li>
+                                <li>バンド制：一定の変動幅内に為替レートを維持</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h4>為替レートと経済への影響:</h4>
+                    <p><strong>J-カーブ効果</strong>：自国通貨安（減価）は短期的には輸入コスト増により経常収支を悪化させますが、中長期的には数量効果（輸出増・輸入減）により経常収支を改善させる効果があります。これは貿易収支の変化がJ字型のカーブを描くことからJ-カーブ効果と呼ばれています。</p>
+                    
+                    <p><strong>マーシャル＝ラーナー条件</strong>：自国通貨の減価が経常収支を改善するための条件として、輸出入の価格弾力性の絶対値の和が1を超える必要があります（|ηx| + |ηm| > 1）。</p>
+                    
+                        <p><strong>通貨のオーバーシューティング</strong>：為替レートが長期均衡値を一時的に大きく超えて変動する現象。物価や賃金の硬直性により、短期的に為替レートが過剰に反応することが原因とされています。</p>
+                    </div>
+                    
+                    <h3>国際マクロ経済理論</h3>
+                    
+                    <div class="explanation">
+                        <h4>マンデル＝フレミングモデル:</h4>
+                        <p>マンデル＝フレミングモデルは、開放経済におけるIS-LM分析の拡張版で、国際資本移動を考慮しています。為替相場制度によって政策効果が大きく異なることを示した重要なモデルです。</p>
+                        
+                        <p><strong>固定相場制の下での政策効果</strong>:</p>
+                        <ul>
+                            <li><strong>財政政策</strong>：非常に有効。政府支出の増加はIS曲線を右にシフトさせ、所得増加・金利上昇をもたらす。金利上昇は資本流入を促し、自国通貨高の圧力が生じる。固定相場制を維持するために中央銀行が外貨売り・自国通貨買いの介入を行い、これがマネーサプライを増加させる（LM曲線右シフト）。結果として、財政政策の効果は増幅される。</li>
+                            <li><strong>金融政策</strong>：無効。マネーサプライの増加はLM曲線を右にシフトさせ、一時的に所得増加・金利低下をもたらす。金利低下は資本流出を促し、自国通貨安の圧力が生じる。固定相場制を維持するために中央銀行が外貨買い・自国通貨売りの介入を行い、これが当初のマネーサプライ増加を相殺してしまう。</li>
+                        </ul>
+                        
+                        <p><strong>変動相場制の下での政策効果</strong>:</p>
+                        <ul>
+                            <li><strong>財政政策</strong>：効果は限定的。政府支出の増加はIS曲線を右にシフトさせ、所得増加・金利上昇をもたらす。金利上昇は資本流入を促し、自国通貨高をもたらす。通貨高は純輸出を減少させ（IS曲線左シフト）、財政政策の効果を一部相殺する。</li>
+                            <li><strong>金融政策</strong>：非常に有効。マネーサプライの増加はLM曲線を右にシフトさせ、所得増加・金利低下をもたらす。金利低下は資本流出を促し、自国通貨安をもたらす。通貨安は純輸出を増加させ（IS曲線右シフト）、金融政策の効果を増幅する。</li>
+                        </ul>
+                        
+                        <p>このモデルは「政策のトリレンマ（不可能な三位一体）」を説明します：</p>
+                        <ol>
+                            <li>固定為替レート</li>
+                            <li>自由な資本移動</li>
+                            <li>独立した金融政策</li>
+                        </ol>
+                        <p>上記3つを同時に達成することは不可能で、最大2つしか選べないというジレンマを示しています。</p>
+                        
+                        <h4>国際収支調整メカニズム:</h4>
+                        <p><strong>価格調整メカニズム</strong>：</p>
+                        <ul>
+                            <li>固定相場制下では、経常収支赤字国では通貨供給減少→物価下落→輸出競争力向上→経常収支改善という経路で調整（ヒュームの正貨流出入メカニズム）</li>
+                            <li>変動相場制下では、経常収支赤字→通貨安→輸出増加・輸入減少→経常収支改善という経路で調整</li>
+                        </ul>
+                        
+                        <p><strong>所得調整メカニズム</strong>：経常収支赤字→総需要減少→所得減少→輸入減少→経常収支改善という経路で調整（ケインズ的調整メカニズム）</p>
+                        
+                        <h4>最適通貨圏理論:</h4>
+                        <p>最適通貨圏理論は、どのような条件下で複数の国や地域が共通通貨を採用することが望ましいかを分析する理論です。マンデルらによって提唱され、ユーロ導入の理論的背景となりました。</p>
+                        
+                        <p><strong>共通通貨採用の便益</strong>：</p>
+                        <ul>
+                            <li>為替変動リスクの解消による貿易・投資の促進</li>
+                            <li>為替取引コストの削減</li>
+                            <li>価格の透明性向上による市場統合の促進</li>
+                            <li>域内金融市場の発展</li>
+                        </ul>
+                        
+                        <p><strong>共通通貨採用のコスト</strong>：</p>
+                        <ul>
+                            <li>独立した金融政策の喪失</li>
+                            <li>為替レート調整による対外不均衡是正メカニズムの喪失</li>
+                            <li>インフレ率の収束が必要</li>
+                        </ul>
+                        
+                        <p><strong>最適通貨圏の条件</strong>：</p>
+                        <ul>
+                            <li>生産要素（特に労働）の高い移動性</li>
+                            <li>経済構造の類似性と対称的なショック</li>
+                            <li>財・サービス価格の伸縮性</li>
+                            <li>財政統合（財政移転メカニズムの存在）</li>
+                            <li>政治的統合と連帯意識</li>
+                        </ul>
+                        
+                        <p>欧州通貨統合（ユーロ）は最適通貨圏理論に基づいて進められましたが、理論が示す条件が十分に満たされていなかったことが、ユーロ圏債務危機などの問題の背景にあるとも指摘されています。</p>
+                    </div>
+                    
+                    <div class="graph-container">
+                        <div class="model-graph">
+                            <canvas id="mundellFlemingCanvas" class="graph-canvas"></canvas>
+                        </div>
+                        
+                        <div class="graph-explanation">
+                            <h4>マンデル＝フレミングモデルの解説:</h4>
+                            <ul>
+                                <li><strong>IS曲線</strong>: 財市場の均衡を表す曲線。開放経済では純輸出（NX）も含まれる。</li>
+                                <li><strong>LM曲線</strong>: 貨幣市場の均衡を表す曲線。</li>
+                                <li><strong>BP曲線</strong>: 国際収支の均衡を表す曲線。完全資本移動の場合は世界利子率水準で水平。</li>
+                                <li><strong>固定相場制</strong>: 為替レートが固定されるため、中央銀行は為替介入によりマネーサプライを調整しなければならない。</li>
+                                <li><strong>変動相場制</strong>: 為替レートが市場で決定されるため、金融政策の自律性が確保される。</li>
+                                <li><strong>政策のトリレンマ</strong>: 固定為替レート、自由な資本移動、独立した金融政策の3つは同時に達成不可能。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>国際収支調整メカニズム:</h4>
+                        <p><strong>価格調整メカニズム</strong>：</p>
+                        <ul>
+                            <li>固定相場制下では、経常収支赤字国では通貨供給減少→物価下落→輸出競争力向上→経常収支改善という経路で調整（ヒュームの正貨流出入メカニズム）</li>
+                            <li>変動相場制下では、経常収支赤字→通貨安→輸出増加・輸入減少→経常収支改善という経路で調整</li>
+                        </ul>
+                        
+                        <p><strong>所得調整メカニズム</strong>：経常収支赤字→総需要減少→所得減少→輸入減少→経常収支改善という経路で調整（ケインズ的調整メカニズム）</p>
+                        
+                        <h4>最適通貨圏理論:</h4>
+                        <p>最適通貨圏理論は、どのような条件下で複数の国や地域が共通通貨を採用することが望ましいかを分析する理論です。マンデルらによって提唱され、ユーロ導入の理論的背景となりました。</p>
+                        
+                        <p><strong>共通通貨採用の便益</strong>：</p>
+                        <ul>
+                            <li>為替変動リスク・取引コスト削減、市場統合促進</li>
+                            <li>為替取引コストの削減</li>
+                            <li>価格の透明性向上による市場統合の促進</li>
+                            <li>域内金融市場の発展</li>
+                        </ul>
+                        
+                        <p><strong>共通通貨採用のコスト</strong>：</p>
+                        <ul>
+                            <li>独立した金融政策・為替調整メカニズムの喪失</li>
+                            <li>為替レート調整による対外不均衡是正メカニズムの喪失</li>
+                            <li>インフレ率の収束が必要</li>
+                        </ul>
+                        
+                        <p><strong>最適通貨圏の条件</strong>：</p>
+                        <ul>
+                            <li>生産要素（特に労働）の高い移動性</li>
+                            <li>経済構造の類似性と対称的なショック</li>
+                            <li>財・サービス価格の伸縮性</li>
+                            <li>財政統合（財政移転メカニズムの存在）</li>
+                            <li>政治的統合と連帯意識</li>
+                        </ul>
+                        
+                        <p>欧州通貨統合（ユーロ）は最適通貨圏理論に基づいて進められましたが、理論が示す条件が十分に満たされていなかったことが、ユーロ圏債務危機などの問題の背景にあるとも指摘されています。</p>
+                </section>
+                
+                <section id="ch2-2">
+                    <h2>2.2 総需要・総供給モデル</h2>
+                    
+                    <div class="problem">
+                        <p><strong>導入問題</strong>: 以下の経済ショックが総需要曲線（AD）と総供給曲線（AS）にどのような影響を与え、均衡GDPと物価水準がどう変化するか説明せよ。</p>
+                        <ol>
+                            <li>消費者信頼感の急激な低下</li>
+                            <li>原油価格の大幅な上昇</li>
+                            <li>政府による大規模な減税政策</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="answer">
+                        <p><strong>解答</strong>:</p>
+                        <ul>
+                            <li><strong>消費者信頼感の急激な低下</strong>:
+                                <ul>
+                                    <li>消費者信頼感の低下→消費支出の減少→総需要の減少</li>
+                                    <li>総需要曲線（AD）が左方向にシフト</li>
+                                    <li>結果: 均衡GDPが減少し、物価水準も低下</li>
+                                    <li>これは「デフレギャップ」を生じさせる可能性がある</li>
+                                </ul>
+                            </li>
+                            <li><strong>原油価格の大幅な上昇</strong>:
+                                <ul>
+                                    <li>原油価格上昇→生産コストの増加→総供給の減少</li>
+                                    <li>短期総供給曲線（SRAS）が左方向にシフト</li>
+                                    <li>結果: 均衡GDPが減少し、物価水準は上昇</li>
+                                    <li>これは「スタグフレーション」（物価上昇と経済停滞の併存）を招く</li>
+                                </ul>
+                            </li>
+                            <li><strong>政府による大規模な減税政策</strong>:
+                                <ul>
+                                    <li>減税→可処分所得の増加→消費支出の増加→総需要の増加</li>
+                                    <li>総需要曲線（AD）が右方向にシフト</li>
+                                    <li>結果: 均衡GDPが増加し、物価水準も上昇</li>
+                                    <li>短期的には経済成長とインフレ圧力が同時に発生</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>短期と長期では影響が異なる点に注意が必要である。短期的にはSRAS曲線のシフトによって実質GDPが変動するが、長期的には経済は自然産出量水準（長期総供給曲線LRAS上）に戻る傾向がある。その調整過程では、賃金・価格の伸縮性や期待の役割が重要になる。</p>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h4>総需要・総供給モデルの基本構造</h4>
+                        <p>総需要・総供給（AD-AS）モデルは、経済全体の均衡産出量と物価水準を分析するフレームワークです。</p>
+                        
+                        <h4>総需要曲線（AD）</h4>
+                        <p>様々な物価水準において、財・サービスに対する需要の総額を表す曲線。右下がりになる理由は以下の3つの効果による:</p>
+                        <ul>
+                            <li><strong>ピグー効果（実質残高効果）</strong>: 物価上昇→実質貨幣残高減少→消費減少</li>
+                            <li><strong>ケインズ効果（利子率効果）</strong>: 物価上昇→貨幣需要増加→利子率上昇→投資減少</li>
+                            <li><strong>国際貿易効果</strong>: 物価上昇→輸出競争力低下・輸入増加→純輸出減少</li>
+                        </ul>
+                        
+                        <h4>総供給曲線（AS）</h4>
+                        <p>様々な物価水準において、企業が供給しようとする財・サービスの総額を表す曲線。</p>
+                        <ul>
+                            <li><strong>短期総供給曲線（SRAS）</strong>: 右上がりの曲線。賃金・原材料価格などが固定的な短期において、物価が上昇すると利潤が増加するため、生産量が増える。</li>
+                            <li><strong>長期総供給曲線（LRAS）</strong>: 垂直の曲線。経済の潜在的な生産能力（自然産出量水準）を示し、長期的には労働市場や生産要素市場が調整されて実質変数には変化がない。</li>
+                        </ul>
+                        
+                        <h4>経済ショックと調整過程</h4>
+                        <p><strong>需要ショック</strong>:</p>
+                        <ul>
+                            <li>需要ショックにより総需要曲線がシフト（例: 消費行動の変化、投資の変動、政府支出の変化など）</li>
+                            <li>短期的には実質GDPと物価水準が変動</li>
+                            <li>長期的には賃金・価格の調整を通じて、経済は自然産出量水準に戻る</li>
+                        </ul>
+                        
+                        <p><strong>供給ショック</strong>:</p>
+                        <ul>
+                            <li>供給ショックにより総供給曲線がシフト（例: 原材料価格の変動、生産性の変化、規制環境の変化など）</li>
+                            <li>正の供給ショック: 生産コスト減少→SRAS右シフト→物価下落・産出量増加</li>
+                            <li>負の供給ショック: 生産コスト増加→SRAS左シフト→物価上昇・産出量減少</li>
+                        </ul>
+                        
+                        <h4>マクロ経済政策の効果</h4>
+                        <p><strong>総需要管理政策</strong>:</p>
+                        <ul>
+                            <li>拡張的財政・金融政策→総需要増加→短期的には産出量と物価上昇</li>
+                            <li>緊縮的財政・金融政策→総需要減少→短期的には産出量と物価下落</li>
+                            <li>長期的には、これらの政策は主に物価水準に影響し、実質GDPへの影響は限定的</li>
+                        </ul>
+                        
+                        <p><strong>供給側の政策</strong>:</p>
+                        <ul>
+                            <li>構造改革、規制緩和、税制改革、技術革新の促進など</li>
+                            <li>長期総供給曲線（LRAS）を右にシフトさせ、持続的な経済成長をもたらす</li>
+                        </ul>
+                        
+                        <h4>景気循環とGDPギャップ</h4>
+                        <ul>
+                            <li><strong>インフレギャップ</strong>: 実際のGDP > 潜在GDP（自然産出量水準）</li>
+                            <li><strong>デフレギャップ</strong>: 実際のGDP < 潜在GDP（自然産出量水準）</li>
+                        </ul>
+                        
+                        <div class="graph-container">
+                            <canvas id="adAsCanvas"></canvas>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="ch2-3">
+                    <h2>2.3 フィリップス曲線</h2>
+                    
+                    <div class="problem">
+                        <p><strong>導入問題</strong>: フィリップス曲線の短期版と長期版の違いを説明し、1970年代のスタグフレーションがフィリップス曲線の理解にどのような影響を与えたかを述べよ。</p>
+                        <ol>
+                            <li>選択肢をクリックして解答を表示</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="answer">
+                        <p><strong>解答</strong>:</p>
+                        <h4>短期フィリップス曲線と長期フィリップス曲線の違い</h4>
+                        <ul>
+                            <li><strong>短期フィリップス曲線</strong>:
+                                <ul>
+                                    <li>右下がりの曲線で、失業率とインフレ率の間のトレードオフを示す</li>
+                                    <li>失業率が低下するとインフレ率が上昇し、失業率が上昇するとインフレ率が低下する関係を表す</li>
+                                    <li>前提条件: 期待インフレ率が一定であること</li>
+                                </ul>
+                            </li>
+                            <li><strong>長期フィリップス曲線</strong>:
+                                <ul>
+                                    <li>垂直な直線で、自然失業率の水準で描かれる</li>
+                                    <li>長期的には、実際のインフレ率と期待インフレ率が一致するため、失業率は自然失業率に収束する</li>
+                                    <li>長期的にはインフレ率と失業率の間にトレードオフは存在しない</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h4>1970年代のスタグフレーションの影響</h4>
+                        <ul>
+                            <li>1970年代、OPEC石油危機などにより、高インフレと高失業率が同時に発生するスタグフレーションが起きた</li>
+                            <li>この現象は従来の短期フィリップス曲線で説明できず、経済学者の理解を変えた:</li>
+                            <li><strong>期待の役割の重視</strong>: フリードマンとフェルプスが「期待で修正されたフィリップス曲線」を提唱</li>
+                            <li><strong>供給ショックの認識</strong>: 総供給曲線の左シフトが同時に物価上昇と生産減少をもたらすことが理解された</li>
+                            <li><strong>政策的含意の変化</strong>: フィリップス曲線のトレードオフに基づく裁量的なマクロ経済政策への信頼が低下</li>
+                            <li><strong>合理的期待理論の台頭</strong>: 経済主体が政策を予測して行動するため、系統的な政策効果は限定的という考え方が広まった</li>
+                        </ul>
+                        
+                        <p>このパラダイムシフトにより、現代のマクロ経済政策は短期的なインフレと失業率のトレードオフを積極的に利用するのではなく、安定的なインフレ期待の形成と自然失業率の引き下げを目指す方向に変化した。</p>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h4>フィリップス曲線の歴史と発展</h4>
+                        <p>フィリップス曲線は1958年にA.W.フィリップスが英国の賃金上昇率と失業率の間の負の相関関係を観察したことから始まりました。その後、賃金上昇率はインフレ率に置き換えられ、失業率とインフレ率の間のトレードオフを示す経済モデルとして発展しました。</p>
+                        
+                        <h4>理論的基礎</h4>
+                        <p>フィリップス曲線の理論的根拠は以下のように説明されます：</p>
+                        <ul>
+                            <li>労働市場の逼迫度が高まる（失業率が低下する）と賃金上昇圧力が生じる</li>
+                            <li>賃金上昇は生産コストを押し上げ、企業は価格を引き上げる</li>
+                            <li>結果として、失業率の低下はインフレ率の上昇につながる</li>
+                        </ul>
+                        
+                        <h4>期待で修正されたフィリップス曲線</h4>
+                        <p>1960年代末、ミルトン・フリードマンとエドモンド・フェルプスは独立して「期待で修正されたフィリップス曲線」を提唱しました：</p>
+                        <p>π = π<sup>e</sup> - β(u - u<sup>*</sup>) + ε</p>
+                        <p>ここで、π は実際のインフレ率、π<sup>e</sup> は期待インフレ率、u は実際の失業率、u<sup>*</sup> は自然失業率、ε は供給ショック、β はパラメータです。</p>
+                        
+                        <h4>短期と長期のダイナミクス</h4>
+                        <p><strong>短期フィリップス曲線</strong>：期待インフレ率が一定の下では、インフレ率と失業率の間にトレードオフが存在します。</p>
+                        <p><strong>長期フィリップス曲線</strong>：長期的には期待インフレ率が実際のインフレ率に調整されるため、トレードオフは消滅し、失業率は自然失業率に収束します。</p>
+                        
+                        <h4>政策的含意</h4>
+                        <ul>
+                            <li><strong>短期的な政策効果</strong>：拡張的な財政・金融政策を通じて短期的に失業率を引き下げることが可能だが、インフレ率が上昇する</li>
+                            <li><strong>長期的な政策効果の限界</strong>：長期的には失業率を自然失業率以下に維持しようとすると、加速的なインフレが発生する</li>
+                            <li><strong>自然失業率理論</strong>：自然失業率（NAIRU：Non-Accelerating Inflation Rate of Unemployment）を引き下げるためには、労働市場の構造改革が必要</li>
+                        </ul>
+                        
+                        <h4>現代的な見解</h4>
+                        <p>現代の経済学では、フィリップス曲線は以下のように拡張・修正されています：</p>
+                        <ul>
+                            <li><strong>ニューケインジアン・フィリップス曲線</strong>：期待形成の合理性と価格の粘着性を組み込んだモデル</li>
+                            <li><strong>グローバル化の影響</strong>：国際競争の激化により、国内の労働市場の逼迫とインフレの関係が弱まっている可能性</li>
+                            <li><strong>非線形性</strong>：失業率が極端に低い場合や高い場合には、フィリップス曲線の傾きが変化する可能性</li>
+                        </ul>
+                        
+                        <div class="graph-container">
+                            <canvas id="phillipsCanvas"></canvas>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="ch2-4">
+                    <h2>2.4 景気変動と景気循環</h2>
+                    
+                    <div class="problem">
+                        <p><strong>導入問題</strong>: 景気循環の各局面（拡張期、後退期、底入れ、回復期）の特徴と、各局面で観察される主な経済指標の動きについて説明せよ。</p>
+                        <ol>
+                            <li>選択肢をクリックして解答を表示</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="answer">
+                        <p><strong>解答</strong>:</p>
+                        <h4>景気循環の各局面の特徴と主な経済指標の動き</h4>
+                        
+                        <p><strong>1. 拡張期（Expansion）</strong>:</p>
+                        <ul>
+                            <li><strong>特徴</strong>: 経済活動が活発化し、実質GDPが潜在GDP水準を超えて成長する時期</li>
+                            <li><strong>経済指標の動き</strong>:
+                                <ul>
+                                    <li>実質GDP: 潜在成長率を上回る速度で増加</li>
+                                    <li>失業率: 低下傾向</li>
+                                    <li>企業収益: 増加</li>
+                                    <li>設備投資: 活発化</li>
+                                    <li>消費者信頼感: 上昇</li>
+                                    <li>株価: 上昇傾向</li>
+                                    <li>インフレ率: 徐々に上昇（特に景気過熱時）</li>
+                                    <li>中央銀行政策: 次第に引き締め方向へ</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>2. 後退期（Recession/Contraction）</strong>:</p>
+                        <ul>
+                            <li><strong>特徴</strong>: 経済活動が縮小し、実質GDPが2四半期連続でマイナス成長となる時期</li>
+                            <li><strong>経済指標の動き</strong>:
+                                <ul>
+                                    <li>実質GDP: 減少</li>
+                                    <li>失業率: 上昇</li>
+                                    <li>企業収益: 減少</li>
+                                    <li>設備投資: 減少</li>
+                                    <li>消費者信頼感: 低下</li>
+                                    <li>株価: 下落傾向</li>
+                                    <li>インフレ率: 低下（需要不足による）</li>
+                                    <li>中央銀行政策: 緩和方向へ</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>3. 底入れ（Trough）</strong>:</p>
+                        <ul>
+                            <li><strong>特徴</strong>: 景気後退が最も深刻な状態に達し、そこから回復へと転じる転換点</li>
+                            <li><strong>経済指標の動き</strong>:
+                                <ul>
+                                    <li>実質GDP: 下げ止まりの兆候</li>
+                                    <li>失業率: ピークに達する（しかし依然として高水準）</li>
+                                    <li>鉱工業生産: 下げ止まり</li>
+                                    <li>在庫: 最低水準に</li>
+                                    <li>株価: 先行して上昇開始することが多い</li>
+                                    <li>長期金利: 先行して低下から上昇に転じることがある</li>
+                                    <li>中央銀行政策: 積極的な緩和策</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>4. 回復期（Recovery）</strong>:</p>
+                        <ul>
+                            <li><strong>特徴</strong>: 経済活動が底から回復し始め、徐々に成長軌道に戻る時期</li>
+                            <li><strong>経済指標の動き</strong>:
+                                <ul>
+                                    <li>実質GDP: プラス成長に転換</li>
+                                    <li>失業率: 緩やかに低下し始める（雇用は遅行指標）</li>
+                                    <li>企業収益: 改善し始める</li>
+                                    <li>設備投資: 徐々に回復</li>
+                                    <li>住宅着工: 早い段階で回復することが多い</li>
+                                    <li>消費者信頼感: 徐々に改善</li>
+                                    <li>株価: 継続的な上昇傾向</li>
+                                    <li>中央銀行政策: 緩和的だが、次第に正常化を視野に</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p>これらの局面は循環的に繰り返されるが、各循環の長さや深さは一様ではなく、外的ショック（金融危機、パンデミック、自然災害など）や政策対応によって大きく影響を受ける。また、各経済指標は景気変動に対して先行性・同行性・遅行性を持ち、景気判断には複数の指標を総合的に分析することが重要である。</p>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h4>景気循環の概念と測定</h4>
+                        <p>景気循環（Business Cycle）とは、経済活動の拡大と収縮が繰り返される現象です。アメリカのNBER（全米経済研究所）は、景気の山（Peak）と谷（Trough）を公式に決定し、景気後退（Recession）を「経済活動の広範な低下が一定期間継続する状態」と定義しています。日本では内閣府が景気動向指数を用いて景気循環を判断しています。</p>
+                        
+                        <h4>景気循環の理論的説明</h4>
+                        <p>景気循環を説明する主な理論には以下のようなものがあります：</p>
+                        <ul>
+                            <li><strong>実物的景気循環理論</strong>：技術ショックなど実物的要因が景気循環の主因と考える</li>
+                            <li><strong>在庫循環</strong>：企業の在庫調整行動が景気循環を生み出すとする理論</li>
+                            <li><strong>金融循環</strong>：信用創造と信用収縮のサイクルが景気循環の原因とする見方</li>
+                            <li><strong>期待循環</strong>：経済主体の楽観・悲観の交替が循環を引き起こすという考え</li>
+                            <li><strong>政治的景気循環</strong>：選挙サイクルに合わせた政策運営が景気循環を生み出すという説</li>
+                        </ul>
+                        
+                        <h4>景気循環の長さと分類</h4>
+                        <p>景気循環は、その周期の長さによって以下のように分類されることがあります：</p>
+                        <ul>
+                            <li><strong>キチンサイクル</strong>：約3〜4年の短期循環（在庫調整に関連）</li>
+                            <li><strong>ジュグラーサイクル</strong>：約7〜11年の中期循環（設備投資に関連）</li>
+                            <li><strong>クズネッツサイクル</strong>：約15〜25年の長期循環（建設投資に関連）</li>
+                            <li><strong>コンドラチェフサイクル</strong>：約50〜60年の超長期循環（技術革新に関連）</li>
+                        </ul>
+                        
+                        <h4>景気指標と先行性</h4>
+                        <p>経済指標は景気変動に対する時間的関係から以下のように分類されます：</p>
+                        <ul>
+                            <li><strong>先行指標</strong>：景気の転換点に先立って変化する指標（例：株価、住宅着工件数、新規求人数）</li>
+                            <li><strong>一致指標</strong>：景気とほぼ同時に変化する指標（例：鉱工業生産指数、実質GDP、小売売上高）</li>
+                            <li><strong>遅行指標</strong>：景気の転換点の後に変化する指標（例：失業率、設備投資、企業倒産件数）</li>
+                        </ul>
+                        
+                        <h4>景気循環と経済政策</h4>
+                        <p>景気変動を緩和するための経済政策には以下のようなものがあります：</p>
+                        <ul>
+                            <li><strong>裁量的財政政策</strong>：景気後退期には財政支出拡大・減税、景気過熱期には財政緊縮</li>
+                            <li><strong>自動安定化装置</strong>：景気後退時に自動的に財政赤字が拡大し、景気を下支えする仕組み（例：失業保険、累進課税）</li>
+                            <li><strong>金融政策</strong>：景気後退期には金融緩和（利下げ、量的緩和）、景気過熱期には金融引き締め（利上げ）</li>
+                            <li><strong>マクロプルーデンス政策</strong>：金融システムのリスクを抑制し、景気循環を安定化させる政策</li>
+                        </ul>
+                        
+                        <h4>現代の景気循環の特徴</h4>
+                        <p>現代の景気循環には以下のような特徴が見られます：</p>
+                        <ul>
+                            <li>グローバル化による国際的な景気の連動性の高まり</li>
+                            <li>サービス産業のウェイト増加により、製造業主導の伝統的な景気循環パターンが変化</li>
+                            <li>中央銀行の独立性向上と政策運営の改善により、インフレーションと景気変動の振幅が縮小</li>
+                            <li>金融セクターの肥大化により、金融不均衡が実体経済に与える影響が拡大</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section id="ch2-5">
+                    <h2>2.5 財政政策の理論と実践</h2>
+                    
+                    <div class="problem">
+                        <p><strong>導入問題</strong>: 財政政策の有効性について、ケインジアンとマネタリストの見解の違いを説明し、財政乗数を小さくする要因について述べよ。</p>
+                        <ol>
+                            <li>選択肢をクリックして解答を表示</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="answer">
+                        <p><strong>解答</strong>:</p>
+                        <h4>財政政策の有効性に関する見解の違い</h4>
+                        
+                        <p><strong>ケインジアンの見解</strong>:</p>
+                        <ul>
+                            <li>財政政策は景気対策として有効であると考える</li>
+                            <li>不況時には政府支出拡大や減税により総需要を刺激し、雇用創出と経済成長を促進できる</li>
+                            <li>財政乗数は一般的に大きいと考え、政府支出は民間消費を「クラウディング・イン」する可能性がある</li>
+                            <li>特に流動性の罠（金利がゼロ近傍）の状況では、財政政策の効果が最大化される</li>
+                            <li>裁量的な財政政策による積極的な景気調整を支持する</li>
+                        </ul>
+                        
+                        <p><strong>マネタリストの見解</strong>:</p>
+                        <ul>
+                            <li>財政政策の効果は限定的で一時的であると考える</li>
+                            <li>政府支出拡大は民間投資を「クラウディング・アウト」し、長期的な成長を阻害する可能性がある</li>
+                            <li>財政赤字拡大は将来の増税予測を通じて、現在の消費を抑制する（リカードの等価定理）</li>
+                            <li>金融政策の方が景気対策として効果的かつ機動的であると主張</li>
+                            <li>裁量的な財政政策よりも、安定的なルールに基づく政策運営を支持する</li>
+                        </ul>
+                        
+                        <h4>財政乗数を小さくする要因</h4>
+                        <ul>
+                            <li><strong>限界消費性向の低さ</strong>: 所得のうち消費に回る割合が小さいと、乗数効果が弱まる</li>
+                            <li><strong>クラウディング・アウト効果</strong>: 政府支出増加→金利上昇→民間投資減少の経路で乗数を低下させる</li>
+                            <li><strong>開放経済の輸入漏出</strong>: 需要増加が輸入増加に向かうと、国内への波及効果が小さくなる</li>
+                            <li><strong>リカード的等価性</strong>: 将来の増税予測による現在の消費・投資抑制</li>
+                            <li><strong>不確実性の増大</strong>: 財政拡大による政策不確実性増大が消費・投資意欲を抑制</li>
+                            <li><strong>金融抑圧</strong>: 政府が市場金利より低い金利で国債発行を強制すると民間資金配分が歪む</li>
+                            <li><strong>政策ラグ</strong>: 財政政策の決定・実施・効果発現までの時間差が効果を弱める</li>
+                            <li><strong>期待形成</strong>: 合理的期待形成下では政策効果が相殺される可能性</li>
+                        </ul>
+                        
+                        <p>実証研究では、財政乗数の大きさは経済状況（景気後退期か拡大期か）、金融政策のスタンス（緩和的か引き締め的か）、為替レート制度（固定か変動か）、財政政策の種類（政府消費か投資か、一時的か恒久的か）などによって大きく異なることが示されている。特に、ゼロ金利制約下や深刻な景気後退期には乗数が大きくなる傾向がある。</p>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h4>財政政策の基本的機能</h4>
+                        <p>財政政策には以下の3つの基本的機能があります：</p>
+                        <ul>
+                            <li><strong>資源配分機能</strong>：公共財・サービスの提供、外部性の是正</li>
+                            <li><strong>所得再分配機能</strong>：累進課税や社会保障を通じた所得格差の是正</li>
+                            <li><strong>経済安定化機能</strong>：景気循環の平準化、完全雇用の達成</li>
+                        </ul>
+                        
+                        <h4>財政政策の手段</h4>
+                        <p>財政政策の主な手段は以下の通りです：</p>
+                        <ul>
+                            <li><strong>歳出政策</strong>：政府支出（消費的支出と投資的支出）の調整</li>
+                            <li><strong>歳入政策</strong>：税制（直接税と間接税）の調整</li>
+                            <li><strong>財政収支</strong>：財政赤字・黒字の調整</li>
+                        </ul>
+                        
+                        <h4>財政乗数の理論</h4>
+                        <p>単純なケインジアンモデルにおける乗数：</p>
+                        <ul>
+                            <li><strong>政府支出乗数</strong>：ΔY/ΔG = 1/(1-c(1-t)) > 1（cは限界消費性向、tは税率）</li>
+                            <li><strong>減税乗数</strong>：ΔY/Δ(-T) = c/(1-c(1-t)) < 政府支出乗数</li>
+                        </ul>
+                        
+                        <h4>自動安定化装置</h4>
+                        <p>景気変動に応じて自動的に作用し、変動を和らげる財政メカニズム：</p>
+                        <ul>
+                            <li><strong>累進所得税</strong>：景気拡大期に税収を増加させ、後退期に減少させる</li>
+                            <li><strong>法人税</strong>：企業収益に連動して変動</li>
+                            <li><strong>失業保険</strong>：景気後退期に給付が増加し、家計の所得を下支え</li>
+                            <li><strong>各種社会保障給付</strong>：景気後退期に需要を下支え</li>
+                        </ul>
+                        
+                        <h4>財政政策の限界と課題</h4>
+                        <ul>
+                            <li><strong>政策ラグ</strong>：認識ラグ、決定ラグ、実施ラグ、効果ラグ</li>
+                            <li><strong>非可逆性</strong>：増やした政府支出は削減が困難（ラチェット効果）</li>
+                            <li><strong>政治的バイアス</strong>：選挙サイクルに影響される傾向（政治的景気循環）</li>
+                            <li><strong>財政規律の問題</strong>：長期的な財政健全性と短期的な景気対策のトレードオフ</li>
+                        </ul>
+                        
+                        <h4>現代的アプローチと論点</h4>
+                        <ul>
+                            <li><strong>財政ルール</strong>：財政運営に一定のルールを設けることで規律を維持（例：EUの安定成長協定）</li>
+                            <li><strong>財政協議会</strong>：独立した専門家組織による財政運営の監視・助言</li>
+                            <li><strong>質的財政政策</strong>：単なる量的拡大ではなく、支出の質や構造改革を重視</li>
+                            <li><strong>サプライサイド財政政策</strong>：成長促進型の税制改革や公共投資</li>
+                        </ul>
+                        
+                        <h4>日本の財政政策の特徴と課題</h4>
+                        <ul>
+                            <li>高水準の政府債務残高（対GDP比で約250%）</li>
+                            <li>少子高齢化による社会保障費の増大</li>
+                            <li>長期デフレと低成長下での財政再建の困難さ</li>
+                            <li>プライマリーバランス（基礎的財政収支）黒字化の目標</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section id="ch2-6">
+                    <h2>2.6 貨幣理論と金融政策</h2>
+                    
+                    <div class="problem">
+                        <p><strong>導入問題</strong>: 中央銀行の金融政策の主な手段を挙げ、それぞれがどのように経済に影響を与えるかを説明せよ。また、非伝統的金融政策が必要となる背景と具体的方法について述べよ。</p>
+                        <ol>
+                            <li>選択肢をクリックして解答を表示</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="answer">
+                        <p><strong>解答</strong>:</p>
+                        <h4>伝統的な金融政策手段とその影響経路</h4>
+                        
+                        <p><strong>1. 政策金利操作</strong>:</p>
+                        <ul>
+                            <li><strong>手段</strong>: 短期金融市場の金利（コールレート、FF金利など）を操作</li>
+                            <li><strong>影響経路</strong>:
+                                <ul>
+                                    <li>金利チャネル: 政策金利↓→市場金利↓→借入コスト↓→投資・消費↑→総需要↑</li>
+                                    <li>資産価格チャネル: 金利↓→株価・不動産価格↑→資産効果→消費↑</li>
+                                    <li>為替レートチャネル: 金利↓→自国通貨安→輸出競争力↑→純輸出↑</li>
+                                    <li>期待チャネル: 将来の金融政策への期待形成→長期金利・物価期待に影響</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>2. 準備預金制度（所要準備率操作）</strong>:</p>
+                        <ul>
+                            <li><strong>手段</strong>: 銀行が中央銀行に預ける必要がある準備金の比率を変更</li>
+                            <li><strong>影響経路</strong>: 所要準備率↓→銀行の貸出余力↑→信用創造↑→貨幣供給量↑→流動性増加→金利低下→投資・消費刺激</li>
+                            <li><strong>備考</strong>: 現代では微調整には使われず、大きな政策変更時に使用される傾向</li>
+                        </ul>
+                        
+                        <p><strong>3. 公開市場操作</strong>:</p>
+                        <ul>
+                            <li><strong>手段</strong>: 中央銀行による国債などの有価証券の売買</li>
+                            <li><strong>影響経路</strong>: 中央銀行の国債購入→市中銀行の準備預金↑→マネタリーベース↑→貨幣乗数効果→マネーストック↑→金利低下→総需要刺激</li>
+                            <li><strong>特徴</strong>: 最も頻繁に利用される金融調節手段で、市場機能を通じた間接的な調整が可能</li>
+                        </ul>
+                        
+                        <h4>非伝統的金融政策</h4>
+                        
+                        <p><strong>必要となる背景</strong>:</p>
+                        <ul>
+                            <li>政策金利がゼロ近傍まで低下し、伝統的な金利政策の余地がなくなる（ゼロ金利制約）</li>
+                            <li>金融システムの機能不全により、政策金利の変更が実体経済に波及しない状況（トランスミッション・メカニズムの障害）</li>
+                            <li>デフレ予想が根強く、通常の金融緩和では期待に働きかけられない状況</li>
+                            <li>深刻な金融危機や経済危機に対応するための緊急措置</li>
+                        </ul>
+                        
+                        <p><strong>具体的方法</strong>:</p>
+                        <ul>
+                            <li><strong>量的緩和政策（QE）</strong>: 中央銀行のバランスシート拡大を通じた資金供給（日銀マネタリーベース目標、FRBの大規模資産購入）</li>
+                            <li><strong>質的緩和政策</strong>: 中央銀行が購入する資産の種類を拡大（国債だけでなく社債、ETF、REITなど）</li>
+                            <li><strong>信用緩和政策</strong>: 特定の信用市場への直接介入（CP買取、社債買取、資産担保証券買取など）</li>
+                            <li><strong>フォワードガイダンス</strong>: 将来の金融政策の方向性を事前に約束・明示し、長期金利や期待に働きかける</li>
+                            <li><strong>マイナス金利政策</strong>: 政策金利や一部準備預金への付利を負の値に設定</li>
+                            <li><strong>イールドカーブ・コントロール（YCC）</strong>: 特定年限の国債金利を目標水準に誘導（日銀の長短金利操作付き量的・質的金融緩和）</li>
+                        </ul>
+                        
+                        <p>非伝統的金融政策は、伝統的手段を補完し、異なる波及経路を通じて経済に働きかけるが、長期化すると金融仲介機能への悪影響や資産価格の歪みなど副作用も生じる可能性がある。また、出口戦略（緩和からの転換）の困難さも課題とされている。</p>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h4>貨幣の機能と役割</h4>
+                        <p>貨幣には以下の基本的機能があります：</p>
+                        <ul>
+                            <li><strong>交換手段</strong>：財・サービスの取引を仲介</li>
+                            <li><strong>価値尺度</strong>：財・サービスの価値を測定する単位</li>
+                            <li><strong>価値保蔵</strong>：購買力を将来に持ち越す手段</li>
+                            <li><strong>繰延支払いの標準</strong>：将来の支払いを現在の価値で約束</li>
+                        </ul>
+                        
+                        <h4>貨幣供給の構造</h4>
+                        <p>現代の金融システムにおける貨幣供給は階層構造になっています：</p>
+                        <ul>
+                            <li><strong>マネタリーベース（ハイパワードマネー）</strong>：中央銀行が直接コントロールできる通貨（現金通貨と準備預金）</li>
+                            <li><strong>マネーストック</strong>：経済全体で流通している貨幣量（M1、M2、M3などの区分）</li>
+                        </ul>
+                        <p>両者の関係：マネーストック = マネタリーベース × 貨幣乗数</p>
+                        
+                        <h4>金融政策の目標</h4>
+                        <p>多くの中央銀行は以下のような目標を持っています：</p>
+                        <ul>
+                            <li><strong>物価安定</strong>：インフレ率を目標水準（多くの場合2%前後）に維持</li>
+                            <li><strong>完全雇用</strong>：失業率を自然失業率に近づける</li>
+                            <li><strong>金融システムの安定</strong>：金融危機の予防と対応</li>
+                            <li><strong>為替レートの安定</strong>（一部の国）</li>
+                        </ul>
+                        
+                        <h4>中央銀行の独立性</h4>
+                        <p>政治からの独立性が重要とされる理由：</p>
+                        <ul>
+                            <li>政治的圧力による過度の金融緩和を防止（インフレ・バイアスの抑制）</li>
+                            <li>長期的視点に基づく政策運営の確保</li>
+                            <li>金融政策の信頼性・一貫性の向上</li>
+                        </ul>
+                        <p>一方で、民主的正当性や他の経済政策との整合性の観点から、一定の説明責任（アカウンタビリティ）も求められます。</p>
+                        
+                        <h4>金融政策の波及メカニズム</h4>
+                        <p>金融政策が実体経済に影響を与える主な経路：</p>
+                        <ul>
+                            <li><strong>金利チャネル</strong>：実質金利変化→投資・消費決定への影響</li>
+                            <li><strong>信用チャネル</strong>：銀行貸出と企業のバランスシートを通じた効果</li>
+                            <li><strong>為替レートチャネル</strong>：金利変化→為替レート変動→純輸出への影響</li>
+                            <li><strong>資産価格チャネル</strong>：株価・不動産価格を通じた効果</li>
+                            <li><strong>期待形成チャネル</strong>：将来の政策・インフレへの期待を通じた効果</li>
+                        </ul>
+                        
+                        <h4>金融政策の運営枠組み</h4>
+                        <p>主な金融政策レジム：</p>
+                        <ul>
+                            <li><strong>インフレーション・ターゲティング</strong>：明示的なインフレ目標を設定し、その達成を目指す</li>
+                            <li><strong>金利目標</strong>：特定の短期金利を操作目標とする</li>
+                            <li><strong>マネーサプライ・ターゲティング</strong>：貨幣量の成長率に目標を設定</li>
+                            <li><strong>為替レート・ターゲティング</strong>：自国通貨の為替レートを特定の水準や範囲に維持</li>
+                        </ul>
+                        
+                        <h4>金融政策の現代的課題</h4>
+                        <ul>
+                            <li><strong>低金利環境の長期化</strong>：政策余地の縮小と金融仲介への影響</li>
+                            <li><strong>フィリップス曲線のフラット化</strong>：インフレと実体経済活動の関係の弱まり</li>
+                            <li><strong>グローバル化の影響</strong>：国内政策の有効性低下と国際協調の必要性</li>
+                            <li><strong>金融政策と金融安定の関係</strong>：物価安定と金融安定のトレードオフ</li>
+                            <li><strong>デジタル通貨の発展</strong>：中央銀行デジタル通貨（CBDC）の検討</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section id="ch2-7">
+                    <h2>2.7 マンデル=フレミングモデルと開放経済</h2>
+                    
+                    <div class="problem">
+                        <p><strong>導入問題</strong>: マンデル=フレミングモデルにおいて、固定相場制と変動相場制の下での財政政策と金融政策の効果の違いを説明せよ。また、「政策のトリレンマ（国際金融のトリレンマ）」とは何か説明せよ。</p>
+                        <ol>
+                            <li>選択肢をクリックして解答を表示</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="answer">
+                        <p><strong>解答</strong>:</p>
+                        <h4>固定相場制と変動相場制の下での政策効果</h4>
+                        
+                        <p><strong>1. 固定相場制の下での政策効果</strong>:</p>
+                        <ul>
+                            <li><strong>財政政策</strong>:
+                                <ul>
+                                    <li>拡張的財政政策→IS曲線右シフト→所得増加・金利上昇</li>
+                                    <li>金利上昇→資本流入→自国通貨高圧力→</li>
+                                    <li>中央銀行が為替レート維持のため外貨売り・自国通貨買い介入</li>
+                                    <li>自国通貨供給量増加→LM曲線右シフト→所得さらに増加</li>
+                                    <li>結果: 財政政策の効果は閉鎖経済より大きい（乗数効果増幅）</li>
+                                </ul>
+                            </li>
+                            <li><strong>金融政策</strong>:
+                                <ul>
+                                    <li>拡張的金融政策→LM曲線右シフト→所得増加・金利低下</li>
+                                    <li>金利低下→資本流出→自国通貨安圧力→</li>
+                                    <li>中央銀行が為替レート維持のため外貨買い・自国通貨売り介入</li>
+                                    <li>自国通貨供給量減少→LM曲線左シフト（元に戻る）</li>
+                                    <li>結果: 金融政策は無効（効果が為替介入により相殺される）</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <p><strong>2. 変動相場制の下での政策効果</strong>:</p>
+                        <ul>
+                            <li><strong>財政政策</strong>:
+                                <ul>
+                                    <li>拡張的財政政策→IS曲線右シフト→所得増加・金利上昇</li>
+                                    <li>金利上昇→資本流入→自国通貨高→純輸出減少</li>
+                                    <li>純輸出減少→IS曲線左シフト（一部相殺）</li>
+                                    <li>結果: 財政政策の効果は限定的（為替レート変動による相殺）</li>
+                                </ul>
+                            </li>
+                            <li><strong>金融政策</strong>:
+                                <ul>
+                                    <li>拡張的金融政策→LM曲線右シフト→所得増加・金利低下</li>
+                                    <li>金利低下→資本流出→自国通貨安→純輸出増加</li>
+                                    <li>純輸出増加→IS曲線右シフト（効果増幅）</li>
+                                    <li>結果: 金融政策は非常に有効（為替レート変動による増幅）</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <h4>政策のトリレンマ（国際金融のトリレンマ）</h4>
+                        <p>政策のトリレンマとは、以下の3つの政策目標のうち、同時に達成できるのは最大2つまでであるという理論：</p>
+                        <ul>
+                            <li><strong>固定為替レート</strong>: 自国通貨の価値を他国通貨に対して一定に保つ</li>
+                            <li><strong>独立した金融政策</strong>: 自国の経済状況に応じた独自の金融政策を実施</li>
+                            <li><strong>自由な資本移動</strong>: 国際間の資本移動を制限しない</li>
+                        </ul>
+                        
+                        <p><strong>3つの政策組み合わせ</strong>:</p>
+                        <ol>
+                            <li><strong>固定為替レート + 独立した金融政策</strong>: 資本規制が必要（例：中国、マレーシア（1998年アジア通貨危機時））</li>
+                            <li><strong>固定為替レート + 自由な資本移動</strong>: 金融政策の独立性を放棄（例：ユーロ圏加盟国、香港）</li>
+                            <li><strong>独立した金融政策 + 自由な資本移動</strong>: 変動相場制を採用（例：日本、米国、英国）</li>
+                        </ol>
+                        
+                        <p>政策のトリレンマにより、世界経済のグローバル化が進む中で、各国は政策選択のトレードオフに直面せざるを得ない。これは国際金融システムの設計や危機対応において重要な制約条件となる。新興国や小国は特にこのトリレンマからの影響を強く受ける傾向がある。</p>
+                    </div>
+                    
+                    <div class="explanation">
+                        <h4>マンデル=フレミングモデルの基本構造</h4>
+                        <p>マンデル=フレミングモデルは、IS-LMモデルを開放経済に拡張したもので、国際資本移動と為替レートを考慮に入れています。1960年代にロバート・マンデルとマーカス・フレミングによって独立に開発されました。</p>
+                        
+                        <p><strong>モデルの基本方程式</strong>:</p>
+                        <ul>
+                            <li><strong>IS曲線</strong>: Y = C(Y-T) + I(r) + G + NX(e)</li>
+                            <li><strong>LM曲線</strong>: M/P = L(r, Y)</li>
+                            <li><strong>BP曲線（国際収支均衡）</strong>: NX(e) + CF(r-r*) = 0</li>
+                        </ul>
+                        <p>ここで、Y は所得（産出量）、r は国内金利、e は為替レート、NX は純輸出、CF は資本フロー、r* は国際金利です。</p>
+                        
+                        <h4>為替レート制度の選択</h4>
+                        <p><strong>固定相場制</strong>:</p>
+                        <ul>
+                            <li><strong>メリット</strong>: 為替リスク減少、貿易・投資の予測可能性向上、インフレ抑制（アンカー効果）</li>
+                            <li><strong>デメリット</strong>: 独立した金融政策の喪失、外的ショックへの調整困難、投機的攻撃の対象になるリスク</li>
+                            <li><strong>採用例</strong>: 通貨ボード制（香港）、ユーロ加盟国間、ドル化政策（エクアドル）</li>
+                        </ul>
+                        
+                        <p><strong>変動相場制</strong>:</p>
+                        <ul>
+                            <li><strong>メリット</strong>: 金融政策の独立性確保、外的ショックの自動調整、国際収支不均衡の是正</li>
+                            <li><strong>デメリット</strong>: 為替リスク増大、過度の変動可能性、インフレ抑制力の弱さ</li>
+                            <li><strong>採用例</strong>: 日本、米国、英国、カナダ、オーストラリアなど</li>
+                        </ul>
+                        
+                        <p><strong>中間的制度</strong>:</p>
+                        <ul>
+                            <li>クローリングペッグ制：定期的に小幅な調整を行う固定相場制</li>
+                            <li>バンド制：一定の変動幅内に為替レートを維持</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section id="ch2-summary">
+                    <h2>要点まとめ</h2>
+                    <ul>
+                        <li>マクロ経済モデルの基礎はIS-LM分析である。</li>
+                        <li>総需要・総供給モデルは、経済全体の均衡産出量と物価水準を分析するフレームワークである。</li>
+                        <li>フィリップス曲線は、失業率とインフレ率の間のトレードオフを示す経済モデルである。</li>
+                        <li>景気変動と景気循環は、経済活動の拡大と収縮が繰り返される現象である。</li>
+                        <li>財政政策は、景気後退期には財政支出拡大・減税、景気過熱期には財政緊縮を行う。</li>
+                        <li>金融政策は、景気後退期には金融緩和（利下げ、量的緩和）、景気過熱期には金融引き締め（利上げ）を行う。</li>
+                        <li>マンデル=フレミングモデルは、開放経済におけるIS-LM分析の拡張版である。</li>
+                        <li>政策のトリレンマは、固定為替レート、独立した金融政策、自由な資本移動の3つの政策目標のうち、同時に達成できるのは最大2つまでである。</li>
+                    </ul>
+                </section>
+                
+                <section id="ch2-quiz">
+                    <h2>復習クイズ</h2>
+                    <ol>
+                        <li>マクロ経済モデルの基礎は何か？</li>
+                        <li>総需要・総供給モデルの基本構造は何か？</li>
+                        <li>フィリップス曲線の短期版と長期版の違いは何か？</li>
+                        <li>景気変動と景気循環の各局面の特徴と主な経済指標の動きは？</li>
+                        <li>財政政策の有効性に関するケインジアンとマネタリストの見解の違いは？</li>
+                        <li>中央銀行の金融政策の主な手段は？</li>
+                        <li>マンデル=フレミングモデルにおいて、固定相場制と変動相場制の下での財政政策と金融政策の効果の違いは？</li>
+                        <li>政策のトリレンマとは何か？</li>
+                    </ol>
+                </section>
+            </section>
+            
+            <section id="ch3-1">
+                <h2>3.1 比較生産費説と貿易理論</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 比較生産費説とは何か説明し、その理論が貿易理論にどのように影響を与えたかを述べよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p>比較生産費説とは、各国の生産費の違いを基にして貿易が発生するという理論です。この理論は、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。</p>
+                    <p>比較生産費説は、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、各国の生産費の違いを基にして貿易が発生するというものです。</p>
+                    <p>比較生産費説は、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、各国の生産費の違いを基にして貿易が発生するというものです。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>比較生産費説は、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、各国の生産費の違いを基にして貿易が発生するというものです。</p>
+                </div>
+            </section>
+            
+            <section id="ch3-2">
+                <h2>3.2 貿易政策と保護主義</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 貿易政策と保護主義の違いは何か。また、それぞれが貿易に与える影響について説明せよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p>貿易政策と保護主義の違いは、貿易に対する政府の介入の程度です。貿易政策は、政府が貿易に対して積極的に介入する政策であり、保護主義は、政府が貿易に対して消極的に介入する政策です。</p>
+                    <p>貿易政策は、政府が貿易に対して積極的に介入する政策であり、保護主義は、政府が貿易に対して消極的に介入する政策です。</p>
+                    <p>貿易政策は、政府が貿易に対して積極的に介入する政策であり、保護主義は、政府が貿易に対して消極的に介入する政策です。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>貿易政策は、政府が貿易に対して積極的に介入する政策であり、保護主義は、政府が貿易に対して消極的に介入する政策です。</p>
+                </div>
+            </section>
+            
+            <section id="ch3-3">
+                <h2>3.3 国際収支と為替レート</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 国際収支の主要項目（経常収支、資本収支）について説明し、為替レートとの関係を論じよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p>国際収支の主要項目は、経常収支と資本収支です。経常収支は、財・サービスの取引や所得・経常移転の受払いを記録したものであり、資本収支は、金融資産・負債の取引を記録したものです。</p>
+                    <p>国際収支の主要項目は、経常収支と資本収支です。経常収支は、財・サービスの取引や所得・経常移転の受払いを記録したものであり、資本収支は、金融資産・負債の取引を記録したものです。</p>
+                    <p>国際収支の主要項目は、経常収支と資本収支です。経常収支は、財・サービスの取引や所得・経常移転の受払いを記録したものであり、資本収支は、金融資産・負債の取引を記録したものです。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>国際収支の主要項目は、経常収支と資本収支です。経常収支は、財・サービスの取引や所得・経常移転の受払いを記録したものであり、資本収支は、金融資産・負債の取引を記録したものです。</p>
+                </div>
+            </section>
+            
+            <section id="ch3-4">
+                <h2>3.4 国際マクロ経済理論</h2>
+                
+                <div class="problem">
+                    <p><strong>導入問題</strong>: 国際マクロ経済理論とは何か説明し、その理論が貿易理論にどのように影響を与えたかを述べよ。</p>
+                    <ol>
+                        <li>選択肢をクリックして解答を表示</li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答</strong>:</p>
+                    <p>国際マクロ経済理論とは、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、比較生産費説を基にして発展したものです。</p>
+                    <p>国際マクロ経済理論とは、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、比較生産費説を基にして発展したものです。</p>
+                    <p>国際マクロ経済理論とは、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、比較生産費説を基にして発展したものです。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>国際マクロ経済理論とは、国際貿易の発生原因を各国の生産費の違いに求めるもので、貿易の利益を説明するために用いられます。この理論は、比較生産費説を基にして発展したものです。</p>
+                </div>
+            </section>
+            
+            <section id="ch3-quiz">
+                <h2>章末問題</h2>
+                <ol>
+                    <li>比較生産費説とは何か？</li>
+                    <li>貿易政策と保護主義の違いは？</li>
+                    <li>国際収支の主要項目は？</li>
+                    <li>国際マクロ経済理論とは？</li>
+                </ol>
+            </section>
+        </main>
+    </div>
+    
+    <a href="#" class="back-to-top">↑</a>
+    
+    <script>
+        // クリックでスムーズにスクロールする
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 導入問題と応用問題の選択肢クリック処理
+        function setupProblemInteractions() {
+            // 導入問題の処理
+            document.querySelectorAll('.problem').forEach((problem, problemIndex) => {
+                const choices = problem.querySelectorAll('li');
+                const explanationContainer = document.createElement('div');
+                explanationContainer.className = 'answer-explanation';
+                
+                // 答えと解説を取得
+                let answerContent = '';
+                let explanationContent = '';
+                
+                // 問題の次の要素が.answer（解答）であれば取得
+                const nextAnswer = problem.nextElementSibling;
+                if (nextAnswer && nextAnswer.classList.contains('answer')) {
+                    answerContent = nextAnswer.innerHTML;
+                    // 解答の次の要素が.explanation（解説）であれば取得
+                    const nextExplanation = nextAnswer.nextElementSibling;
+                    if (nextExplanation && nextExplanation.classList.contains('explanation')) {
+                        explanationContent = nextExplanation.innerHTML;
+                    }
+                    
+                    // 既存の解答・解説要素を非表示に
+                    nextAnswer.style.display = 'none';
+                    if (nextExplanation) {
+                        nextExplanation.style.display = 'none';
+                    }
+                }
+                
+                // 解説コンテナの内容を設定
+                explanationContainer.innerHTML = answerContent + explanationContent;
+                
+                // 解説コンテナを問題の後に追加
+                problem.appendChild(explanationContainer);
+                
+                // 各選択肢にクリックイベントを追加
+                choices.forEach((choice, choiceIndex) => {
+                    choice.addEventListener('click', () => {
+                        // 全選択肢のスタイルをリセット
+                        choices.forEach(c => c.classList.remove('selected'));
+                        
+                        // クリックされた選択肢を選択状態に
+                        choice.classList.add('selected');
+                        
+                        // 解説を表示
+                        explanationContainer.classList.add('visible');
+                    });
+                });
+            });
+            
+            // 応用問題の処理
+            document.querySelectorAll('.applied-problem').forEach((problem) => {
+                const answerContainer = document.createElement('div');
+                answerContainer.className = 'applied-answer';
+                
+                // 問題の次の要素が.answer（解答）であれば取得
+                const nextAnswer = problem.nextElementSibling;
+                const nextExplanation = nextAnswer?.nextElementSibling;
+                
+                if (nextAnswer && nextAnswer.classList.contains('answer')) {
+                    // 解答の内容を取得
+                    answerContainer.innerHTML = nextAnswer.innerHTML;
+                    
+                    // 次に説明があれば追加
+                    if (nextExplanation && nextExplanation.classList.contains('explanation')) {
+                        answerContainer.innerHTML += nextExplanation.innerHTML;
+                        nextExplanation.style.display = 'none';
+                    }
+                    
+                    // 既存の解答要素を非表示に
+                    nextAnswer.style.display = 'none';
+                }
+                
+                // 解答コンテナを問題の後に追加
+                problem.appendChild(answerContainer);
+                
+                // 問題クリックで解答表示
+                problem.addEventListener('click', () => {
+                    answerContainer.classList.toggle('visible');
+                });
+            });
+        }
+        
+        // スクロールで「トップに戻る」ボタンの表示/非表示
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        
+        // 初期状態では非表示
+        document.querySelector('.back-to-top').style.display = 'none';
+
+        // 経済モデルのグラフを描画する関数
+        function drawEconomicGraphs() {
+            // グラフの色を設定
+            const primaryColor = '#4a86e8';   // IS曲線/AD曲線/短期フィリップス曲線
+            const secondaryColor = '#6aa84f'; // LM曲線/SRAS曲線/長期フィリップス曲線
+            const tertiaryColor = '#e69138';  // 均衡点/LRAS曲線
+            const axisColor = '#333333';      // 軸
+            const bgColor = 'rgba(248, 249, 250, 0.5)';  // 背景
+
+            // IS-LM曲線の描画（Chart.js使用）
+            function drawISLM() {
+                const canvas = document.getElementById('isLmCanvas');
+                if (!canvas) return;
+                
+                // キャンバスの親要素のサイズを取得
+                const parentWidth = canvas.parentElement.offsetWidth;
+                const aspectRatio = 0.75; // 縦横比
+                
+                // キャンバスのサイズを設定
+                canvas.style.width = '100%';
+                canvas.style.height = parentWidth * aspectRatio + 'px';
+                
+                // データポイント数
+                const numPoints = 101;
+                
+                // IS曲線と LM曲線のデータ生成
+                const isData = [];
+                const lmData = [];
+                
+                // IS曲線（右下がり）: 利子率が下がると投資が増加し、所得が増加
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 所得
+                    // より現実的な非線形のIS曲線: y = 80 - 0.4x - 0.003x²
+                    const isY = 80 - 0.4 * x - 0.003 * x * x;
+                    if (isY >= 0 && isY <= 100) {
+                        isData.push({x: x, y: isY});
+                    }
+                }
+                
+                // LM曲線（右上がり）: 所得が増加すると取引需要が増加して利子率が上昇
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 所得
+                    // より現実的な非線形のLM曲線: y = 10 + 0.5x + 0.002x²
+                    const lmY = 10 + 0.5 * x + 0.002 * x * x;
+                    if (lmY >= 0 && lmY <= 100) {
+                        lmData.push({x: x, y: lmY});
+                    }
+                }
+                
+                // 均衡点を計算（IS曲線とLM曲線の交点）
+                // IS曲線: y = 80 - 0.4x - 0.003x²
+                // LM曲線: y = 10 + 0.5x + 0.002x²
+                // 連立方程式: 80 - 0.4x - 0.003x² = 10 + 0.5x + 0.002x²
+                // 整理: 70 - 0.9x - 0.005x² = 0
+                const a = -0.005;
+                const b = -0.9;
+                const c = 70;
+                // 2次方程式の解の公式で解く
+                const equilibriumX = (-b - Math.sqrt(b*b - 4*a*c)) / (2*a);
+                // 均衡点のy座標を計算（IS曲線またはLM曲線のいずれかの式に代入）
+                const equilibriumY = 80 - 0.4 * equilibriumX - 0.003 * equilibriumX * equilibriumX;
+                
+                // 均衡点の座標
+                const equilibriumPoint = {
+                    x: equilibriumX,
+                    y: equilibriumY
+                };
+                
+                // IS-LMチャートを作成
+                const isLmChart = new Chart(canvas, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                // IS曲線
+                                label: 'IS曲線',
+                                data: isData,
+                                showLine: true,
+                                borderColor: primaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // LM曲線
+                                label: 'LM曲線',
+                                data: lmData,
+                                showLine: true,
+                                borderColor: secondaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // 均衡点
+                                label: '均衡点',
+                                data: [equilibriumPoint],
+                                showLine: false,
+                                backgroundColor: tertiaryColor,
+                                borderColor: tertiaryColor,
+                                pointRadius: 6,
+                                pointHoverRadius: 8
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '所得 (Y)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '利子率 (r)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    equilibriumLabel: {
+                                        type: 'label',
+                                        xValue: equilibriumX + 5,
+                                        yValue: equilibriumY - 5,
+                                        content: ['均衡点', `(Y=${Math.round(equilibriumX)}, r=${Math.round(equilibriumY)})`],
+                                        font: {
+                                            size: 12
+                                        },
+                                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 3,
+                                        padding: 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // 総需要・総供給モデルの描画
+            function drawADAS() {
+                const canvas = document.getElementById('adAsCanvas');
+                if (!canvas) return;
+                
+                // キャンバスの親要素のサイズを取得
+                const parentWidth = canvas.parentElement.offsetWidth;
+                const aspectRatio = 0.75; // 縦横比
+                
+                // キャンバスのサイズを設定
+                canvas.style.width = '100%';
+                canvas.style.height = parentWidth * aspectRatio + 'px';
+                
+                // データポイント数
+                const numPoints = 101;
+                
+                // 総需要曲線（AD）、短期総供給曲線（SRAS）、長期総供給曲線（LRAS）のデータ生成
+                const adData = [];
+                const srasData = [];
+                const lrasData = [];
+                
+                // 自然産出量の水準
+                const naturalOutput = 50;
+                
+                // 総需要曲線（右下がり）: 物価水準が上昇すると実質GDPが減少
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 実質GDP
+                    // 非線形の総需要曲線: y = 100 - 0.8x + 0.005x²
+                    const adY = 100 - 0.8 * x + 0.005 * x * x;
+                    if (adY >= 0 && adY <= 100) {
+                        adData.push({x: x, y: adY});
+                    }
+                }
+                
+                // 短期総供給曲線（右上がり）: 物価水準が上昇すると実質GDPが増加
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 実質GDP
+                    // 非線形の短期総供給曲線: y = 20 + 0.6x + 0.01x²
+                    const srasY = 20 + 0.6 * x + 0.01 * x * x;
+                    if (srasY >= 0 && srasY <= 100) {
+                        srasData.push({x: x, y: srasY});
+                    }
+                }
+                
+                // 長期総供給曲線（垂直線）: 自然産出量水準で垂直
+                for (let i = 0; i <= 100; i++) {
+                    lrasData.push({x: naturalOutput, y: i});
+                }
+                
+                // 均衡点を計算（総需要曲線と短期総供給曲線の交点）
+                // AD曲線: y = 100 - 0.8x + 0.005x²
+                // SRAS曲線: y = 20 + 0.6x + 0.01x²
+                // 連立方程式: 100 - 0.8x + 0.005x² = 20 + 0.6x + 0.01x²
+                // 整理: 80 - 1.4x - 0.005x² = 0
+                const a = -0.005;
+                const b = -1.4;
+                const c = 80;
+                // 2次方程式の解の公式で解く
+                const equilibriumX = (-b - Math.sqrt(b*b - 4*a*c)) / (2*a);
+                // 均衡点のy座標を計算（AD曲線またはSRAS曲線のいずれかの式に代入）
+                const equilibriumY = 100 - 0.8 * equilibriumX + 0.005 * equilibriumX * equilibriumX;
+                
+                // 均衡点の座標
+                const equilibriumPoint = {
+                    x: equilibriumX,
+                    y: equilibriumY
+                };
+                
+                // 長期均衡点のy座標を計算（LRAS曲線とAD曲線の交点）
+                const longRunY = 100 - 0.8 * naturalOutput + 0.005 * naturalOutput * naturalOutput;
+                
+                // 長期均衡点の座標
+                const longRunEquilibriumPoint = {
+                    x: naturalOutput,
+                    y: longRunY
+                };
+                
+                // AD-ASチャートを作成
+                const adAsChart = new Chart(canvas, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                // AD曲線
+                                label: '総需要曲線 (AD)',
+                                data: adData,
+                                showLine: true,
+                                borderColor: primaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // SRAS曲線
+                                label: '短期総供給曲線 (SRAS)',
+                                data: srasData,
+                                showLine: true,
+                                borderColor: secondaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // LRAS曲線
+                                label: '長期総供給曲線 (LRAS)',
+                                data: lrasData,
+                                showLine: true,
+                                borderColor: tertiaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                borderDash: [5, 5],
+                                pointRadius: 0
+                            },
+                            {
+                                // 短期均衡点
+                                label: '短期均衡点',
+                                data: [equilibriumPoint],
+                                showLine: false,
+                                backgroundColor: primaryColor,
+                                borderColor: primaryColor,
+                                pointRadius: 6,
+                                pointHoverRadius: 8
+                            },
+                            {
+                                // 長期均衡点
+                                label: '長期均衡点',
+                                data: [longRunEquilibriumPoint],
+                                showLine: false,
+                                backgroundColor: tertiaryColor,
+                                borderColor: tertiaryColor,
+                                pointRadius: 6,
+                                pointHoverRadius: 8
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '実質GDP (Y)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '物価水準 (P)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    naturalOutputLabel: {
+                                        type: 'label',
+                                        xValue: naturalOutput,
+                                        yValue: 5,
+                                        content: '自然産出量水準',
+                                        font: {
+                                            size: 12
+                                        },
+                                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 3,
+                                        padding: 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // フィリップス曲線の描画
+            function drawPhillipsCurve() {
+                const canvas = document.getElementById('phillipsCanvas');
+                if (!canvas) return;
+                
+                // キャンバスの親要素のサイズを取得
+                const parentWidth = canvas.parentElement.offsetWidth;
+                const aspectRatio = 0.75; // 縦横比
+                
+                // キャンバスのサイズを設定
+                canvas.style.width = '100%';
+                canvas.style.height = parentWidth * aspectRatio + 'px';
+                
+                // データポイント数
+                const numPoints = 101;
+                
+                // 短期フィリップス曲線と長期フィリップス曲線のデータ生成
+                const srpcData = [];
+                const lrpcData = [];
+                
+                // 自然失業率
+                const naturalUnemployment = 5;
+                
+                // 短期フィリップス曲線（右下がり）: 失業率が上昇するとインフレ率が低下
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i * 0.1; // 失業率
+                    // 非線形の短期フィリップス曲線: y = 10 - 1.5(x - 5) + 0.1(x - 5)²
+                    const deviation = x - naturalUnemployment;
+                    const srpcY = 2 - 1.5 * deviation + 0.1 * deviation * deviation;
+                    if (srpcY >= -2 && srpcY <= 12 && x >= 0 && x <= 10) {
+                        srpcData.push({x: x, y: srpcY});
+                    }
+                }
+                
+                // 長期フィリップス曲線（垂直線）: 自然失業率で垂直
+                for (let i = -2; i <= 12; i += 0.1) {
+                    lrpcData.push({x: naturalUnemployment, y: i});
+                }
+                
+                // フィリップス曲線チャートを作成
+                const phillipsChart = new Chart(canvas, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                // 短期フィリップス曲線
+                                label: '短期フィリップス曲線',
+                                data: srpcData,
+                                showLine: true,
+                                borderColor: primaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // 長期フィリップス曲線
+                                label: '長期フィリップス曲線',
+                                data: lrpcData,
+                                showLine: true,
+                                borderColor: secondaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                borderDash: [5, 5],
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '失業率 (%)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 10,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'インフレ率 (%)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: -2,
+                                max: 12,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    naturalUnemploymentLabel: {
+                                        type: 'label',
+                                        xValue: naturalUnemployment,
+                                        yValue: -1,
+                                        content: '自然失業率',
+                                        font: {
+                                            size: 12
+                                        },
+                                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 3,
+                                        padding: 5
+                                    },
+                                    expectedInflationLabel: {
+                                        type: 'label',
+                                        xValue: naturalUnemployment,
+                                        yValue: 2,
+                                        content: '期待インフレ率',
+                                        font: {
+                                            size: 12
+                                        },
+                                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 3,
+                                        padding: 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // マンデル＝フレミングモデルのグラフ描画
+            function drawMundellFleming() {
+                const canvas = document.getElementById('mundellFlemingCanvas');
+                if (!canvas) return;
+                
+                // キャンバスの親要素のサイズを取得
+                const parentWidth = canvas.parentElement.offsetWidth;
+                const aspectRatio = 0.75; // 縦横比
+                
+                // キャンバスのサイズを設定
+                canvas.style.width = '100%';
+                canvas.style.height = parentWidth * aspectRatio + 'px';
+                
+                // データポイント数
+                const numPoints = 101;
+                
+                // IS曲線、LM曲線、BP曲線のデータ生成
+                const isData = [];
+                const lmData = [];
+                const bpData = [];
+                
+                // IS曲線（右下がり）: 利子率が下がると投資が増加して所得が増加
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 所得
+                    // IS曲線: y = 80 - 0.4x - 0.003x²
+                    const isY = 80 - 0.4 * x - 0.003 * x * x;
+                    if (isY >= 0 && isY <= 100) {
+                        isData.push({x: x, y: isY});
+                    }
+                }
+                
+                // LM曲線（右上がり）: 所得が増加すると取引需要が増加して利子率が上昇
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 所得
+                    // LM曲線: y = 10 + 0.5x + 0.002x²
+                    const lmY = 10 + 0.5 * x + 0.002 * x * x;
+                    if (lmY >= 0 && lmY <= 100) {
+                        lmData.push({x: x, y: lmY});
+                    }
+                }
+                
+                // BP曲線（右上がり）: 所得が増加すると経常収支が悪化し、それを埋め合わせるためには高い利子率が必要
+                for (let i = 0; i < numPoints; i++) {
+                    const x = i; // 所得
+                    // BP曲線（完全資本移動を仮定すると水平）: y = 40
+                    const bpY = 40;
+                    if (bpY >= 0 && bpY <= 100) {
+                        bpData.push({x: x, y: bpY});
+                    }
+                }
+                
+                // 均衡点を計算（IS曲線とLM曲線の交点）
+                // IS曲線: y = 80 - 0.4x - 0.003x²
+                // LM曲線: y = 10 + 0.5x + 0.002x²
+                // 連立方程式: 80 - 0.4x - 0.003x² = 10 + 0.5x + 0.002x²
+                // 整理: 70 - 0.9x - 0.005x² = 0
+                const a = -0.005;
+                const b = -0.9;
+                const c = 70;
+                // 2次方程式の解の公式で解く
+                const equilibriumX = (-b - Math.sqrt(b*b - 4*a*c)) / (2*a);
+                // 均衡点のy座標を計算（IS曲線またはLM曲線のいずれかの式に代入）
+                const equilibriumY = 80 - 0.4 * equilibriumX - 0.003 * equilibriumX * equilibriumX;
+                
+                // 均衡点の座標
+                const equilibriumPoint = {
+                    x: equilibriumX,
+                    y: equilibriumY
+                };
+                
+                // マンデル＝フレミングチャートを作成
+                const mundellFlemingChart = new Chart(canvas, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                // IS曲線
+                                label: 'IS曲線',
+                                data: isData,
+                                showLine: true,
+                                borderColor: primaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // LM曲線
+                                label: 'LM曲線',
+                                data: lmData,
+                                showLine: true,
+                                borderColor: secondaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                pointRadius: 0,
+                                tension: 0.4
+                            },
+                            {
+                                // BP曲線
+                                label: 'BP曲線（完全資本移動）',
+                                data: bpData,
+                                showLine: true,
+                                borderColor: tertiaryColor,
+                                backgroundColor: 'transparent',
+                                borderWidth: 3,
+                                borderDash: [5, 5],
+                                pointRadius: 0
+                            },
+                            {
+                                // 均衡点
+                                label: '均衡点',
+                                data: [equilibriumPoint],
+                                showLine: false,
+                                backgroundColor: '#9c27b0',
+                                borderColor: '#9c27b0',
+                                pointRadius: 6,
+                                pointHoverRadius: 8
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '所得 (Y)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '利子率 (r)',
+                                    color: axisColor,
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                },
+                                min: 0,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    worldInterestRateLabel: {
+                                        type: 'label',
+                                        xValue: 95,
+                                        yValue: 40,
+                                        content: '世界利子率水準',
+                                        font: {
+                                            size: 12
+                                        },
+                                        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 3,
+                                        padding: 5
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // 各グラフの描画関数を呼び出す
+            drawISLM();
+            drawADAS();
+            drawPhillipsCurve();
+            drawMundellFleming();
+        }
+        
+        // DOMコンテンツが読み込まれた後に実行
+        document.addEventListener('DOMContentLoaded', function () {
+            setupProblemInteractions();
+            
+            // Canvas要素が存在する場合のみグラフを描画
+            if (document.getElementById('isLmCanvas') || 
+                document.getElementById('adAsCanvas') || 
+                document.getElementById('phillipsCanvas') ||
+                document.getElementById('mundellFlemingCanvas')) {
+                drawEconomicGraphs();
+            }
+        });
+    </script>
+</body>
+</html> 

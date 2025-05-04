@@ -1,0 +1,87 @@
+@startuml マクロ経済モデル関連図
+
+skinparam {
+  DefaultFontName "MS Gothic"
+  DefaultFontSize 12
+  DefaultTextAlignment center
+  BackgroundColor white
+  Shadowing false
+}
+
+rectangle "マクロ経済モデル" as macro #lightblue {
+  rectangle "IS-LM分析" as islm #D0E0FF
+  rectangle "AD-ASモデル" as adas #D0E0FF
+  rectangle "フィリップス曲線" as phillips #D0E0FF
+  rectangle "ケインズモデル" as keynes #D0E0FF
+  rectangle "経済成長モデル" as growth #D0E0FF
+}
+
+islm --- adas
+islm --- keynes
+adas --- phillips
+keynes --- growth
+
+rectangle "IS-LM曲線" as islm_detail #E6F9FF {
+  rectangle "IS曲線（財市場均衡）" as is #F0F9FF
+  rectangle "LM曲線（貨幣市場均衡）" as lm #F0F9FF
+}
+
+rectangle "AD-ASモデル" as adas_detail #E6F9FF {
+  rectangle "総需要曲線（AD）" as ad #F0F9FF
+  rectangle "短期総供給曲線（SRAS）" as sras #F0F9FF
+  rectangle "長期総供給曲線（LRAS）" as lras #F0F9FF
+}
+
+rectangle "フィリップス曲線" as phillips_detail #E6F9FF {
+  rectangle "短期フィリップス曲線" as srpc #F0F9FF
+  rectangle "長期フィリップス曲線" as lrpc #F0F9FF
+}
+
+rectangle "ケインズモデル" as keynes_detail #E6F9FF {
+  rectangle "乗数効果" as multiplier #F0F9FF
+  rectangle "消費関数・投資関数" as consumption #F0F9FF
+  rectangle "有効需要の原理" as effective #F0F9FF
+}
+
+rectangle "経済成長モデル" as growth_detail #E6F9FF {
+  rectangle "ソローモデル" as solow #F0F9FF
+  rectangle "内生的成長理論" as endogenous #F0F9FF
+  rectangle "ハロッド＝ドーマー・モデル" as harrod #F0F9FF
+}
+
+rectangle "マクロ経済政策" as policy #lightgreen {
+  rectangle "財政政策" as fiscal #D0FFD0
+  rectangle "金融政策" as monetary #D0FFD0
+  rectangle "為替政策" as exchange #D0FFD0
+}
+
+rectangle "財政政策" as fiscal_detail #E6FFE6 {
+  rectangle "拡張的財政政策" as exp_fiscal #F0FFF0
+  rectangle "緊縮的財政政策" as con_fiscal #F0FFF0
+}
+
+rectangle "金融政策" as monetary_detail #E6FFE6 {
+  rectangle "伝統的金融政策" as trad_monetary #F0FFF0
+  rectangle "非伝統的金融政策" as nontrad_monetary #F0FFF0
+  rectangle "中央銀行の独立性" as independence #F0FFF0
+}
+
+rectangle "為替政策" as exchange_detail #E6FFE6 {
+  rectangle "変動為替レート制" as floating #F0FFF0
+  rectangle "固定為替レート制" as fixed #F0FFF0
+  rectangle "管理変動相場制" as managed #F0FFF0
+}
+
+islm -- islm_detail
+adas -- adas_detail
+phillips -- phillips_detail
+keynes -- keynes_detail
+growth -- growth_detail
+
+fiscal -- fiscal_detail
+monetary -- monetary_detail
+exchange -- exchange_detail
+
+macro -- policy
+
+@enduml 

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第2章：マクロ経済理論と経済政策</title>
+    <style>
+        :root {
+            --primary-color: #4a86e8;
+            --secondary-color: #6aa84f;
+            --accent-color: #e69138;
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --border-color: #ddd;
+            --hover-color: #eef5ff;
+            --code-bg: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic Pro', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        nav {
+            width: 250px;
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+            align-self: flex-start;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
+        nav h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        nav li {
+            margin-bottom: 8px;
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 3px;
+            transition: background-color 0.2s ease;
+        }
+        
+        nav a:hover {
+            background-color: var(--hover-color);
+        }
+        
+        main {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 25px;
+        }
+        
+        h4 {
+            color: var(--accent-color);
+        }
+        
+        .problem {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .answer {
+            background-color: #f0fff0;
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .explanation {
+            background-color: #fffaf0;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        code {
+            background-color: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .graph-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .summary-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .summary-box h4 {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+        
+        .summary-box ul {
+            margin-bottom: 0;
+        }
+        
+        .quiz-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .quiz-item:last-child {
+            border-bottom: none;
+        }
+        
+        .highlight {
+            background-color: #ffffcc;
+            padding: 2px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.2s ease;
+        }
+        
+        .back-to-top:hover {
+            background-color: #3a76d8;
+        }
+        
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            nav {
+                width: auto;
+                position: static;
+                margin-bottom: 20px;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>第2章：マクロ経済理論と経済政策</h1>
+    </header>
+    
+    <div class="container">
+        <nav>
+            <h3>目次</h3>
+            <ul>
+                <li><a href="#intro-problems">1. 導入問題</a></li>
+                <li><a href="#core-problems">2. 核心問題</a></li>
+                <li><a href="#explanation">3. 解説と理論展開</a></li>
+                <li><a href="#models">4. 図解とモデル</a></li>
+                <li><a href="#applied-problems">5. 応用問題</a></li>
+                <li><a href="#summary">6. 要点まとめ</a></li>
+                <li><a href="#mindmap">7. マインドマップ</a></li>
+                <li><a href="#quiz">8. 復習クイズ</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <section id="intro-problems">
+                <h2>1. 導入問題（典型問題）</h2>
+                
+                <div class="problem">
+                    <p><strong>問題1</strong>: IS-LM分析において、拡張的財政政策がクラウディングアウトを引き起こす理由として最も適切なものはどれか。</p>
+                    <ol>
+                        <li>政府支出の増加により消費が減少するため</li>
+                        <li>政府支出の増加が利子率を上昇させ、民間投資を減少させるため</li>
+                        <li>政府支出の増加により輸出が減少するため</li>
+                        <li>政府支出の増加により物価水準が上昇するため</li>
+                    </ol>
+                </div>
+                
+                <div class="problem">
+                    <p><strong>問題2</strong>: 短期的に総需要が増加した場合の影響として正しいものはどれか。</p>
+                    <ol>
+                        <li>実質GDPのみが増加する</li>
+                        <li>物価水準のみが上昇する</li>
+                        <li>実質GDPと物価水準の両方が増加する</li>
+                        <li>実質GDPが増加し、物価水準は変化しない</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <section id="core-problems">
+                <h2>2. 核心問題（本質理解確認問題）</h2>
+                
+                <div class="problem">
+                    <p><strong>問題A</strong>: IS-LM分析における財政政策と金融政策の効果の違いを説明し、どのような経済状況においてそれぞれの政策がより効果的かを論じよ。</p>
+                </div>
+                
+                <div class="problem">
+                    <p><strong>問題B</strong>: フィリップス曲線に関する考え方の変遷を説明し、短期と長期におけるインフレ率と失業率の関係について論じよ。</p>
+                </div>
+            </section>
+            
+            <section id="explanation">
+                <h2>3. 解説と理論展開</h2>
+                
+                <h3>導入問題の解答</h3>
+                
+                <div class="answer">
+                    <p><strong>問題1の解答</strong>: 2. 政府支出の増加が利子率を上昇させ、民間投資を減少させるため</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>IS-LM分析では、拡張的財政政策（政府支出の増加や減税）によりIS曲線が右にシフトします。これにより、均衡点は右上方向に移動し、所得（Y）の増加と利子率（r）の上昇が生じます。利子率の上昇は民間投資を減少させるため、政府支出の増加による所得の拡大効果が一部相殺されます。この現象をクラウディングアウト（民間投資の締め出し）といいます。</p>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>問題2の解答</strong>: 3. 実質GDPと物価水準の両方が増加する</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>総需要・総供給モデル（AD-ASモデル）において、短期的な総需要の増加は総需要曲線を右にシフトさせます。短期的には総供給曲線が右上がりであるため、総需要の増加は実質GDPと物価水準の両方を上昇させます。長期的には、価格や賃金の調整により、経済は自然産出量水準に戻り、物価水準のみが上昇することになります。</p>
+                </div>
+                
+                <h3>核心問題の解答と理論展開</h3>
+                
+                <div class="answer">
+                    <p><strong>問題Aの解答</strong>:</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>IS-LM分析における財政政策と金融政策の効果の違いは以下の通りです。</p>
+                    
+                    <h4>財政政策の効果:</h4>
+                    <p>財政政策（政府支出の増加や減税）はIS曲線をシフトさせることで効果を発揮します。拡張的財政政策はIS曲線を右にシフトさせ、所得（Y）と利子率（r）を上昇させます。しかし、利子率の上昇は民間投資を減少させるため、政策効果が一部相殺されます（クラウディングアウト）。</p>
+                    
+                    <h4>金融政策の効果:</h4>
+                    <p>金融政策（マネーサプライの変更）はLM曲線をシフトさせることで効果を発揮します。拡張的金融政策はLM曲線を右にシフトさせ、所得（Y）を増加させ、利子率（r）を低下させます。利子率の低下は民間投資を刺激するため、所得拡大効果がさらに強まります。</p>
+                    
+                    <h4>各政策の有効性を左右する要因:</h4>
+                    <ol>
+                        <li><strong>IS曲線の傾き（投資の利子弾力性）</strong>:
+                            <ul>
+                                <li>投資が利子率に敏感な場合（IS曲線が平坦）→金融政策が有効</li>
+                                <li>投資が利子率に鈍感な場合（IS曲線が急勾配）→財政政策が有効</li>
+                            </ul>
+                        </li>
+                        <li><strong>LM曲線の傾き（貨幣需要の利子弾力性）</strong>:
+                            <ul>
+                                <li>貨幣需要が利子率に敏感な場合（LM曲線が平坦）→財政政策が有効</li>
+                                <li>貨幣需要が利子率に鈍感な場合（LM曲線が急勾配）→金融政策が有効</li>
+                            </ul>
+                        </li>
+                        <li><strong>流動性の罠</strong>:
+                            <p>利子率が極めて低い水準にあり、追加的な貨幣供給が利子率をほとんど低下させない状況では、LM曲線がほぼ水平となり、金融政策の効果は限定的です。この場合、財政政策がより効果的となります。</p>
+                        </li>
+                        <li><strong>クラウディングアウト効果の大きさ</strong>:
+                            <p>開放経済では、資本移動の程度によってクラウディングアウト効果の大きさが変わります。完全資本移動の場合、財政政策の効果は為替レートの変動により相殺される可能性があります。</p>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>問題Bの解答</strong>:</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>フィリップス曲線に関する考え方は次のように変遷してきました。</p>
+                    
+                    <h4>初期のフィリップス曲線(1958年):</h4>
+                    <p>イギリスの経済学者A.W.フィリップスが失業率と名目賃金上昇率の間に安定した負の相関関係を発見し、失業率を下げようとすると賃金上昇率（インフレ）が高まるというトレードオフ関係を示しました。</p>
+                    
+                    <h4>サミュエルソン・ソロー版(1960年代):</h4>
+                    <p>名目賃金上昇率の代わりにインフレ率を用いて、失業率とインフレ率の間のトレードオフ関係を示しました。この関係は政策立案者に「メニュー」を提供すると考えられ、政府は失業率とインフレ率の組み合わせを選択できると解釈されました。</p>
+                    
+                    <h4>フリードマン・フェルプスの自然失業率理論(1968年):</h4>
+                    <p>長期的には失業率とインフレ率の間にトレードオフは存在せず、失業率は「自然失業率」（後に「インフレ非加速的失業率：NAIRU」と呼ばれる）に収束するという考え方が提唱されました。彼らは、人々がインフレ期待を形成し、それに基づいて行動するため、継続的な拡張政策は一時的に失業率を下げるだけで、長期的にはインフレ率のみを上昇させると主張しました。</p>
+                    
+                    <h4>短期と長期のフィリップス曲線:</h4>
+                    
+                    <p><strong>短期フィリップス曲線</strong>: 
+                    短期的には、インフレ期待が一定である限り、失業率とインフレ率の間にトレードオフ関係が存在します。総需要を刺激する政策は一時的に失業率を引き下げますが、インフレ率を上昇させます。</p>
+                    
+                    <p><strong>長期フィリップス曲線</strong>: 
+                    長期的には、人々のインフレ期待が実際のインフレ率に適応するため、フィリップス曲線は自然失業率（u*）において垂直となります。つまり、長期的には失業率とインフレ率の間にトレードオフは存在せず、拡張政策は失業率に持続的な影響を与えることなく、インフレ率のみを上昇させます。</p>
+                    
+                    <h4>合理的期待理論とフィリップス曲線:</h4>
+                    <p>1970年代には、ルーカスらによる合理的期待理論が登場し、人々が将来のインフレを正確に予測するならば、短期的なフィリップス曲線のトレードオフも存在しないとする見方も提示されました。この見方によれば、予期された金融政策は実質変数（失業率や実質GDP）に影響を与えず、予期されない政策のみが短期的な効果を持ちます。</p>
+                    
+                    <h4>現代のフィリップス曲線理論:</h4>
+                    <p>現代では、ニューケインジアンフィリップス曲線(NKPC)が提唱され、インフレ率は期待インフレ率と実質限界費用（または産出ギャップ）に依存するとされています。また、グローバル化や中央銀行の独立性、インフレターゲティングの採用などにより、フィリップス曲線が平坦化しているという議論もあります。</p>
+                </div>
+            </section>
+            
+            <section id="models">
+                <h2>4. 図解とモデル</h2>
+                
+                <h3>IS-LM曲線と財政・金融政策</h3>
+                
+                <div class="graph-container">
+                    <img src="images/IS-LM曲線.png" alt="IS-LM曲線と財政・金融政策" />
+                </div>
+                
+                <p>IS-LM分析は、財市場と貨幣市場の同時均衡を分析するモデルです。IS曲線は財市場の均衡を表し、LM曲線は貨幣市場の均衡を表します。両曲線の交点が経済全体の均衡点となります。</p>
+                
+                <h3>総需要・総供給モデル（AD-AS）</h3>
+                
+                <div class="graph-container">
+                    <img src="images/AD-ASモデル.png" alt="総需要・総供給モデル" />
+                </div>
+                
+                <p>AD-ASモデルは、総需要曲線（AD）と総供給曲線（AS）の交点で経済の均衡が決定されることを示します。短期的な総供給曲線（SRAS）は右上がりであり、長期的な総供給曲線（LRAS）は潜在GDP水準で垂直となります。</p>
+                
+                <h3>フィリップス曲線の長期・短期関係</h3>
+                
+                <div class="graph-container">
+                    <img src="images/フィリップス曲線.png" alt="フィリップス曲線" />
+                </div>
+                
+                <p>フィリップス曲線は、インフレ率と失業率の関係を示す曲線です。短期的にはトレードオフ関係が存在しますが、長期的には自然失業率において垂直となります。</p>
+                
+                <h3>マクロ経済モデルの関連図</h3>
+                
+                <div class="graph-container">
+                    <img src="images/マクロ経済モデル関連図.png" alt="マクロ経済モデル関連図" />
+                </div>
+                
+                <p>上図はマクロ経済モデルと政策の関連を示しています。</p>
+            </section>
+            
+            <section id="applied-problems">
+                <h2>5. 応用問題</h2>
+                
+                <div class="problem">
+                    <p><strong>問題C</strong>: 中央銀行がインフレ目標を2%と設定している経済において、景気後退により失業率が上昇し、インフレ率が1%に低下した場合、どのような金融政策を採るべきか。また、その政策が効果を発揮するためのメカニズムと、有効性を左右する要因について説明せよ。</p>
+                </div>
+                
+                <div class="answer">
+                    <p><strong>解答例</strong>:</p>
+                    <p>インフレ目標2%に対して実際のインフレ率が1%と低く、さらに景気後退で失業率が上昇している状況では、中央銀行は拡張的金融政策（金利引き下げやマネタリーベースの拡大など）を採るべきです。</p>
+                </div>
+                
+                <div class="explanation">
+                    <h4>拡張的金融政策のメカニズム:</h4>
+                    <ol>
+                        <li>政策金利の引き下げ→市場金利の低下</li>
+                        <li>金利低下→投資や耐久消費財支出の増加</li>
+                        <li>資産価格上昇→富効果による消費増加</li>
+                        <li>為替レート減価→純輸出の増加</li>
+                        <li>総需要の拡大→景気回復とインフレ率上昇</li>
+                    </ol>
+                    
+                    <h4>有効性を左右する要因:</h4>
+                    <ol>
+                        <li>流動性の罠：金利がゼロ近傍まで低下すると、通常の金融政策の有効性が低下</li>
+                        <li>バランスシート調整：家計や企業が債務削減優先の場合、金利低下の効果が限定的</li>
+                        <li>信用創造機能の低下：銀行のリスク回避志向が強まると、貸出増加につながりにくい</li>
+                        <li>期待形成：インフレ期待が低く固定化すると、実質金利低下効果が限られる</li>
+                    </ol>
+                    
+                    <p>このような状況では、量的・質的金融緩和やフォワードガイダンス（将来の金融政策の方向性を示す）など、非伝統的な金融政策手段も考慮すべきです。深刻な景気後退の場合は、財政政策との政策協調も有効な選択肢となります。</p>
+                </div>
+            </section>
+            
+            <section id="summary">
+                <h2>6. 要点まとめ</h2>
+                
+                <div class="summary-box">
+                    <h4>IS-LM分析</h4>
+                    <ul>
+                        <li>IS曲線：財市場の均衡を表す（投資=貯蓄）</li>
+                        <li>LM曲線：貨幣市場の均衡を表す（貨幣需要=貨幣供給）</li>
+                        <li>財政政策：IS曲線をシフトさせる</li>
+                        <li>金融政策：LM曲線をシフトさせる</li>
+                        <li>クラウディングアウト：財政拡大による利子率上昇が民間投資を抑制する現象</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>総需要・総供給（AD-AS）モデル</h4>
+                    <ul>
+                        <li>総需要曲線（AD）：消費、投資、政府支出、純輸出の合計</li>
+                        <li>短期総供給曲線（SRAS）：短期的には右上がり</li>
+                        <li>長期総供給曲線（LRAS）：長期的には潜在GDP水準で垂直</li>
+                        <li>需要ショック：短期的にはGDPと物価に影響、長期的には物価のみに影響</li>
+                        <li>供給ショック：GDPと物価に逆方向の影響（スタグフレーション）</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>フィリップス曲線</h4>
+                    <ul>
+                        <li>短期フィリップス曲線：インフレ率と失業率の間に負の相関関係</li>
+                        <li>長期フィリップス曲線：自然失業率において垂直</li>
+                        <li>インフレ期待の役割：期待インフレ率の変化により短期フィリップス曲線がシフト</li>
+                        <li>自然失業率（NAIRU）：インフレ率を加速させない失業率</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>財政政策</h4>
+                    <ul>
+                        <li>拡張的財政政策：政府支出増加、減税</li>
+                        <li>緊縮的財政政策：政府支出削減、増税</li>
+                        <li>自動安定化装置：景気変動を自動的に緩和する仕組み（累進課税、失業保険等）</li>
+                        <li>財政政策の限界：時間ラグ、クラウディングアウト、リカードの等価定理</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>金融政策</h4>
+                    <ul>
+                        <li>伝統的金融政策：政策金利操作によるマネーサプライのコントロール</li>
+                        <li>非伝統的金融政策：量的緩和、信用緩和、フォワードガイダンス</li>
+                        <li>金融政策の波及経路：金利経路、資産価格経路、為替レート経路、期待経路</li>
+                        <li>金融政策の限界：流動性の罠、時間ラグ、不確実性</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>生産物市場とGDP</h4>
+                    <ul>
+                        <li>国内総生産（GDP）の三面等価：生産・支出・分配</li>
+                        <li>国民所得の決定：有効需要が国民所得を決定</li>
+                        <li>消費関数：所得に依存する消費支出の関係</li>
+                        <li>投資関数：利子率や期待収益率に依存する投資支出の関係</li>
+                        <li>政府支出：財政政策の直接的な手段</li>
+                        <li>純輸出：為替レートや内外所得水準に依存</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>貨幣市場と利子率</h4>
+                    <ul>
+                        <li>貨幣需要関数：取引需要、予備的需要、投機的需要</li>
+                        <li>貨幣供給：中央銀行によるコントロール</li>
+                        <li>均衡利子率：貨幣需要と貨幣供給が一致する点</li>
+                        <li>流動性選好説：利子率は貨幣に対する流動性選好と貨幣量によって決定</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>雇用と物価水準</h4>
+                    <ul>
+                        <li>オークンの法則：失業率と潜在GDPからの乖離の関係</li>
+                        <li>賃金決定メカニズム：労働市場の需給と交渉力</li>
+                        <li>物価決定メカニズム：企業のマークアップ価格設定</li>
+                        <li>コスト・プッシュ・インフレとディマンド・プル・インフレ</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-box">
+                    <h4>景気変動と景気循環</h4>
+                    <ul>
+                        <li>景気循環の諸段階：後退期、底、回復期、拡張期、ピーク</li>
+                        <li>外生的ショック：技術ショック、政策ショック、期待ショック</li>
+                        <li>内生的メカニズム：加速度原理、乗数効果、在庫循環</li>
+                        <li>長期トレンドと循環変動の分解</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="mindmap">
+                <h2>7. マインドマップ</h2>
+                
+                <div class="graph-container">
+                    <img src="images/マクロ経済モデル関連図.png" alt="マクロ経済モデル関連図" />
+                </div>
+            </section>
+            
+            <section id="quiz">
+                <h2>8. 復習クイズ</h2>
+                
+                <div class="quiz-item">
+                    <p>1. 拡張的財政政策と拡張的金融政策が同時に実施された場合、IS-LM分析において利子率はどのように変化するか？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>2. 総供給ショック（例：原油価格の高騰）が生じた場合、AD-ASモデルにおいて実質GDPと物価水準はどのように変化するか？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>3. フィリップス曲線が平坦化する要因として考えられるものは何か？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>4. 政府支出乗数が大きくなる条件は何か？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>5. 中央銀行の独立性が重視される理由は何か？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>6. IS曲線の傾きを決定する要因は何か？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>7. LM曲線の傾きを決定する要因は何か？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>8. なぜ長期的には経済は自然失業率に収束するのか？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>9. 財政政策と金融政策の時間ラグの違いは何か？</p>
+                </div>
+                
+                <div class="quiz-item">
+                    <p>10. インフレターゲティングの利点と課題は何か？</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <a href="#" class="back-to-top">↑</a>
+    
+    <script>
+        // クリックでスムーズにスクロールする
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // スクロールで「トップに戻る」ボタンの表示/非表示
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        
+        // 初期状態では非表示
+        document.querySelector('.back-to-top').style.display = 'none';
+    </script>
+</body>
+</html> 
